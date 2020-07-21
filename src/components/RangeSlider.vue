@@ -29,7 +29,7 @@ export default {
         width: '12px',
         height: '12px',
         color: 'chocolate',
-        x: '0pt',
+        x: 0,
       },
     };
   },

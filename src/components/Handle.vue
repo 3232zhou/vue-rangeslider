@@ -2,9 +2,8 @@
   <div 
     ref="handle"
     :style="handleStyles"
-    v-on:drag="onHandleDragged"
-    v-on:click="onHandleClicked"
-    draggable="true">
+    v-on:mousedown="onDragStart"
+    >
   </div>
 </template>
 
@@ -12,35 +11,53 @@
 export default {
   name: 'Handle',
   props: ['handleOptions'],
+  data() {
+    return {
+      currentX: 0,
+      xOffset: 0,
+      initialX: 0,
+      focus: false,
+    }
+  },
   computed: {
     handleStyles() {
-      console.log(this.handleOptions);
+      // console.log(this.handleOptions);
       return {
         cursor: 'pointer',
         width: this.handleOptions.width,
         height: this.handleOptions.height,
         backgroundColor: this.handleOptions.color,
-        left: this.handleOptions.x,
       };
     },
   },
   methods: {
-    onHandleClicked() {
-      // const currentColor = this.$refs.handle.style.backgroundColor;
-      // if (currentColor === this.handleOptions.backgroundColor){
-      //   return this.$refs.handle.style.backgroundColor = 'blue';
-      // }
-      // this.$refs.handle.style.backgroundColor = this.handleOptions.backgroundColor;
+    onDragStart(e) {
+      this.initialX = e.pageX - this.xOffset;
+      this.focus = true;
+      document.addEventListener('mousemove', this.onHandleDrag);
+      document.addEventListener('mouseup', this.onDragEnd);
     },
-    onHandleDragged() {
-      this.moveRight();
+    onDragEnd(e) {
+      e.preventDefault();
+      this.initialX = this.currentX;
+      document.removeEventListener('mousemove', this.onHandleDrag);
+      document.removeEventListener('mouseup', this.onDragEnd);
     },
-    moveLeft() {
-      this.$refs.handle.style.transform += 'translateX(-1pt)';
+    onHandleDrag(e) {
+      e.preventDefault();
+      this.currentX = e.pageX - this.initialX;
+      this.xOffset = this.currentX;
+
+      if(this.xOffset < 0){
+        this.xOffset = 0;
+      }
+      this.setTranslate();
     },
-    moveRight() {
-      this.$refs.handle.style.transform += 'translateX(1pt)';
-    },
+    setTranslate() {
+      this.$refs.handle.style.transform = 
+      `translateX(${this.xOffset}px)`;
+    }
+
   },
 };
 </script>
