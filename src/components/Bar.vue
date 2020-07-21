@@ -6,22 +6,13 @@
 <script>
 export default {
   name: 'Bar',
-  props: {
-    barWidth: {
-      type: String,
-      default: '100%',
-    },
-    barHeight: {
-      type: String,
-      default: '8px',
-    },
-  },
+  props: ['barOptions'],
   computed: {
     barStyles() {
       return {
-        width: this.barWidth,
-        height: this.barHeight,
-        backgroundColor: 'cadetblue',
+        width: this.barOptions.width,
+        height: this.barOptions.height,
+        backgroundColor: this.barOptions.color,
       };
     },
   },
