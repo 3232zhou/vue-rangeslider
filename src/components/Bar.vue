@@ -1,5 +1,5 @@
 <template>
-    <div class="range-slider__bar" :style="barStyles"></div>
+    <div :style="barStyles"></div>
 </template>
 
 

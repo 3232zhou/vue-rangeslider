@@ -1,17 +1,21 @@
 <template>
-  <div class="hello">
-    <h1>{{msg}}</h1>
-    <bar :barOptions="barOptions"></bar>
+  <div class="root">
+    <div class="range-slider">
+      <bar class="range-slider__bar" :barOptions="barOptions"></bar>
+      <handle class="range-slider__handle" :handleOptions="handleOptions"></handle>
+    </div>
   </div>
 </template>
 
 <script>
 import Bar from './Bar';
+import Handle from './Handle';
 
 export default {
   name: 'RangeSlider',
   components: {
     bar: Bar,
+    handle: Handle,
   },
   data() {
     return {
@@ -20,6 +24,11 @@ export default {
         width: '100%',
         height: '8px',
         color: 'cadetblue',
+      },
+      handleOptions: {
+        width: '12px',
+        height: '12px',
+        color: 'chocolate',
       },
     };
   },
@@ -32,20 +41,34 @@ export default {
       type: Number,
       default: 100,
     },
-    options: {
+    bar: {
       type: Object,
     },
+    handle: {
+      type: Object,
+    }
   },
   beforeMount() {
     this.setOptions();
   },
   methods: {
     setOptions() {
-      Object.assign(this.barOptions, this.options);
+      Object.assign(this.barOptions, this.bar);
+      Object.assign(this.handleOptions, this.handle);
     },
   },
 };
 </script>
 
 <style scoped>
+.range-slider {
+  display: flex;
+  align-items: center;
+}
+.range-slider__bar {
+  position: absolute;
+}
+.range-slider__handle {
+  position: relative;
+}
 </style>
