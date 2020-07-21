@@ -4,8 +4,8 @@ import Vue from 'vue';
 import RangeSlider from '@/components/RangeSlider';
 import Bar from '@/components/Bar';
 
-describe('RangeSlider', () => {
-  it('should be have default bar when no option props passed', ()=>{
+describe('Bar Check', () => {
+  it('should have default bar when no option props passed', ()=>{
     const wrapper = mount(RangeSlider);
     expect(wrapper.find('.range-slider__bar').exists()).toBe(true);
   });
