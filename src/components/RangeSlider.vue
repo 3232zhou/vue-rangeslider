@@ -29,6 +29,7 @@ export default {
         width: '12px',
         height: '12px',
         color: 'chocolate',
+        x: '0pt',
       },
     };
   },
@@ -46,7 +47,7 @@ export default {
     },
     handle: {
       type: Object,
-    }
+    },
   },
   beforeMount() {
     this.setOptions();
