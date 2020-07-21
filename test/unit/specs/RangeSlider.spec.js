@@ -13,7 +13,7 @@ describe('Bar Check', () => {
   it('should change color when color option passed', ()=>{
     const wrapper = mount(RangeSlider, {
       propsData: {
-        options: {
+        bar: {
           color: 'blue',
         },
       }
@@ -22,3 +22,22 @@ describe('Bar Check', () => {
     expect(wrapper.find('.range-slider__bar').element.style['backgroundColor']).toBe('blue');
   })
 });
+
+describe('Handle Check', ()=>{
+  it('should have default handle when no option props passed', ()=>{
+    const wrapper = mount(RangeSlider);
+    expect(wrapper.find('.range-slider__handle').exists()).toBe(true);
+  });
+
+  it('should change color when color props passed', ()=>{
+    const wrapper = mount(RangeSlider, {
+      propsData: {
+        handle: {
+          color: 'red',
+        },
+      }
+    });
+
+    expect(wrapper.find('.range-slider__handle').element.style['backgroundColor']).toBe('red');
+  })
+})
