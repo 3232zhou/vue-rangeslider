@@ -1,8 +1,10 @@
 <template>
   <div class="root">
     <div class="range-slider">
+      <div class="range-slider__label--min">{{min}}</div>
       <bar class="range-slider__bar" :barOptions="barOptions"></bar>
       <handle class="range-slider__handle" :handleOptions="handleOptions"></handle>
+      <div class="range-slider__label--max">{{max}}</div>
     </div>
   </div>
 </template>
@@ -19,7 +21,6 @@ export default {
   },
   data() {
     return {
-      msg: 'Vue Range Slider',
       barOptions: {
         width: '100%',
         height: '8px',
@@ -64,6 +65,7 @@ export default {
 <style scoped>
 .range-slider {
   display: flex;
+  position: relative;
   align-items: center;
 }
 .range-slider__bar {
@@ -71,5 +73,14 @@ export default {
 }
 .range-slider__handle {
   position: relative;
+}
+.range-slider__label--min {
+  position: absolute;
+  top: 10px;
+}
+.range-slider__label--max {
+  position: absolute;
+  right: 0;
+  top: 10px;
 }
 </style>
