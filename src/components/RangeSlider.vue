@@ -1,13 +1,15 @@
 <template>
   <div class="root">
     <div class="range-slider">
-      <div class="range-slider__label--min">{{min}}</div>
-      <bar class="range-slider__bar" :barOptions="barOptions"></bar>
+      <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
       
       <div class="range-slider__handle">
-        <handle class="range-slider__handle--min" :handleOptions="handleOptions" ref="handleMin"></handle>
+        <handle class="range-slider__handle--min" :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
       </div>
 
+    </div>
+    <div class="range-slider__label">
+      <div class="range-slider__label--min">{{min}}</div>
       <div class="range-slider__label--max">{{max}}</div>
     </div>
   </div>
@@ -36,6 +38,9 @@ export default {
         color: 'chocolate',
         value: 30, // default value
       },
+      barWidth: {
+        type: Number,
+      }
     };
   },
   props: {
@@ -57,6 +62,9 @@ export default {
   beforeMount() {
     this.setOptions();
   },
+  mounted() {
+    this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
+  },
   methods: {
     setOptions() {
       Object.assign(this.barOptions, this.bar);
@@ -77,7 +85,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 .range-slider__handle {
   display: flex;
@@ -85,13 +92,8 @@ export default {
 .range-slider__handle--min {
   position: relative;
 }
-.range-slider__label--min {
-  position: absolute;
-  top: 10px;
-}
-.range-slider__label--max {
-  position: absolute;
-  right: 0;
-  top: 10px;
+.range-slider__label {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -4,18 +4,23 @@
     :style="handleStyles"
     v-on:mousedown="onDragStart"
     >
+    <div>
+     {{this.currentVal}}
+    </div>
   </div>
+
 </template>
 
 <script>
 export default {
   name: 'Handle',
-  props: ['handleOptions'],
+  props: ['handleOptions', 'barWidth'],
   data() {
     return {
       currentX: 0,
       xOffset: 0,
       initialX: 0,
+      currentVal: 0,
     };
   },
   mounted() {
@@ -72,9 +77,15 @@ export default {
       if (this.xOffset < 0) {
         this.xOffset = 0;
       }
+
+      if(this.xOffset > this.barWidth){
+        this.xOffset = this.barWidth;
+      }
       this.setTranslate();
     },
     setTranslate() {
+      const barPosition = (this.xOffset / this.barWidth);
+      this.currentVal = Math.round(100 * barPosition);
       this.$refs.handle.style.transform = `translateX(${this.xOffset}px)`;
     },
   },

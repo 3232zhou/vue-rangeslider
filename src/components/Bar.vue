@@ -1,6 +1,6 @@
 <template>
     <div :style="barStyles">
-      <div class="range-slider__slice" v-for="i in 5" v-bind:key="i"></div>
+      <div class="range-slider__slice" v-for="i in sliceNum" v-bind:key="i"></div>
     </div>
 </template>
 
@@ -8,6 +8,16 @@
 export default {
   name: 'Bar',
   props: ['barOptions'],
+  data() {
+    return {
+      sliceNum : {
+        type: Number
+      }
+    }
+  },
+  beforeMount() {
+    this.sliceNum = this.barOptions.sliceNum? this.barOptions.sliceNum : 5;
+  },
   computed: {
     barStyles() {
       return {
