@@ -17,7 +17,22 @@ export default {
       xOffset: 0,
       initialX: 0,
       focus: false,
-    }
+    };
+  },
+  beforeMount() {
+    window.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      // left arrow
+      if (e.keyCode === 37) {
+        this.xOffset -= 10;
+        this.setTranslate();
+      }
+      // right arrow
+      if (e.keyCode === 39) {
+        this.xOffset += 10;
+        this.setTranslate();
+      }
+    });
   },
   computed: {
     handleStyles() {
@@ -48,16 +63,14 @@ export default {
       this.currentX = e.pageX - this.initialX;
       this.xOffset = this.currentX;
 
-      if(this.xOffset < 0){
+      if (this.xOffset < 0) {
         this.xOffset = 0;
       }
       this.setTranslate();
     },
     setTranslate() {
-      this.$refs.handle.style.transform = 
-      `translateX(${this.xOffset}px)`;
-    }
-
+      this.$refs.handle.style.transform = `translateX(${this.xOffset}px)`;
+    },
   },
 };
 </script>
