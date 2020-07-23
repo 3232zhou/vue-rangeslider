@@ -41,6 +41,7 @@ export default {
         type: Number,
       },
       clickedHandle: null,
+      lastClickedHandle: null,
     };
   },
   props: {
@@ -65,6 +66,7 @@ export default {
   mounted() {
     this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
     document.addEventListener('mousedown', this.whichHandleClicked);
+    this.addKeyboardEvent();
   },
   methods: {
     setOptions() {
@@ -80,6 +82,7 @@ export default {
       console.log(this.clickedHandle.$el);
 
       this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
+      this.lastClickedHandle = this.clickedHandle;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
@@ -110,22 +113,29 @@ export default {
       this.currentVal = Math.round(100 * barPosition);
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
     },
-    keyboardEvent() {
+    addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
+        if(!this.lastClickedHandle) return;
         // left arrow
         if (e.keyCode === 37) {
-          if(this.clickedHandle.xOffset <= 0) {
-            this.clickedHandle.xOffset = 0;
-            return this.setTranslate();
+          if(this.lastClickedHandle.xOffset <= 0) {
+            this.lastClickedHandle.xOffset = 0;
+            this.lastClickedHandle.setTranslate();
+            return;
           }
-          this.clickedHandle.xOffset -= 10;
-          this.setTranslate();
+          this.lastClickedHandle.xOffset -= 10;
+          this.lastClickedHandle.setTranslate();
         }
         // right arrow
         if (e.keyCode === 39) {
-          this.clickedHandle.xOffset += 10;
-          this.clickedHandle.setTranslate();
+
+          if(this.lastClickedHandle.xOffset >= this.barWidth){
+            console.log("overflow!");
+            return;
+          }
+          this.lastClickedHandle.xOffset += 10;
+          this.lastClickedHandle.setTranslate();
         }
       });
     }
