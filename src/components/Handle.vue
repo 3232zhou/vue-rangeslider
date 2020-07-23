@@ -2,10 +2,7 @@
   <div 
     ref="handle"
     :style="handleStyles"
-    >
-    <!-- <div>
-     {{this.currentVal}}
-    </div> -->
+  >
   </div>
 
 </template>

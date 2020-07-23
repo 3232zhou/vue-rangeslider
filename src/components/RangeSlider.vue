@@ -41,7 +41,6 @@ export default {
         type: Number,
       },
       clickedHandle: null,
-      lastClickedHandle: null,
     };
   },
   props: {
@@ -82,7 +81,7 @@ export default {
       console.log(this.clickedHandle.$el);
 
       this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
-      this.lastClickedHandle = this.clickedHandle;
+      this.clickedHandle = this.clickedHandle;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
@@ -103,7 +102,6 @@ export default {
     },
     onDragEnd(e) {
       e.preventDefault();
-      this.clickedHandle = null;
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
       console.log("end..");
@@ -116,26 +114,26 @@ export default {
     addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
-        if(!this.lastClickedHandle) return;
+        if(!this.clickedHandle) return;
         // left arrow
         if (e.keyCode === 37) {
-          if(this.lastClickedHandle.xOffset <= 0) {
-            this.lastClickedHandle.xOffset = 0;
-            this.lastClickedHandle.setTranslate();
+          if(this.clickedHandle.xOffset <= 0) {
+            this.clickedHandle.xOffset = 0;
+            this.setTranslate();
             return;
           }
-          this.lastClickedHandle.xOffset -= 10;
-          this.lastClickedHandle.setTranslate();
+          this.clickedHandle.xOffset -= 10;
+          this.setTranslate();
         }
         // right arrow
         if (e.keyCode === 39) {
 
-          if(this.lastClickedHandle.xOffset >= this.barWidth){
+          if(this.clickedHandle.xOffset >= this.barWidth){
             console.log("overflow!");
             return;
           }
-          this.lastClickedHandle.xOffset += 10;
-          this.lastClickedHandle.setTranslate();
+          this.clickedHandle.xOffset += 10;
+          this.setTranslate();
         }
       });
     }
