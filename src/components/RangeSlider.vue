@@ -5,9 +5,7 @@
       <bar class="range-slider__bar" :barOptions="barOptions"></bar>
       
       <div class="range-slider__handle">
-        <handle class="range-slider__handle--min" :handleOptions="handleOptions"></handle>
-        <handle class="range-slider__handle--max" :handleOptions="handleOptions"></handle>
-
+        <handle class="range-slider__handle--min" :handleOptions="handleOptions" ref="handleMin"></handle>
       </div>
 
       <div class="range-slider__label--max">{{max}}</div>
@@ -36,7 +34,7 @@ export default {
         width: '12px',
         height: '12px',
         color: 'chocolate',
-        x: 0,
+        value: 30, // default value
       },
     };
   },
@@ -76,9 +74,15 @@ export default {
 }
 .range-slider__bar {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 .range-slider__handle {
   display: flex;
+}
+.range-slider__handle--min {
   position: relative;
 }
 .range-slider__label--min {

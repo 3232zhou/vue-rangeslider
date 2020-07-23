@@ -16,14 +16,20 @@ export default {
       currentX: 0,
       xOffset: 0,
       initialX: 0,
-      focus: false,
     };
   },
-  beforeMount() {
+  mounted() {
+    this.xOffset = this.handleOptions.value;
+    this.setTranslate();
+
     window.addEventListener('keydown', (e) => {
       e.preventDefault();
       // left arrow
       if (e.keyCode === 37) {
+        if(this.xOffset <= 0) {
+          this.xOffset = 0;
+          return this.setTranslate();
+        }
         this.xOffset -= 10;
         this.setTranslate();
       }
