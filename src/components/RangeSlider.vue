@@ -6,24 +6,22 @@
       <div class="range-slider__handle">
         <handle class="range-slider__handle--min" :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
       </div>
-
     </div>
-    <div class="range-slider__label">
-      <div class="range-slider__label--min">{{min}}</div>
-      <div class="range-slider__label--max">{{max}}</div>
-    </div>
+    <range :min="min" :max="max"></range>
   </div>
 </template>
 
 <script>
 import Bar from './Bar';
 import Handle from './Handle';
+import Range from './Range';
 
 export default {
   name: 'RangeSlider',
   components: {
     bar: Bar,
     handle: Handle,
+    range: Range,
   },
   data() {
     return {
