@@ -2,9 +2,10 @@
   <div class="root">
     <div class="range-slider">
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
-      
+    
       <div class="range-slider__handle">
-        <handle class="range-slider__handle--min" :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMax" :barWidth="barWidth"></handle>
       </div>
     </div>
     <range :min="min" :max="max"></range>
@@ -38,7 +39,8 @@ export default {
       },
       barWidth: {
         type: Number,
-      }
+      },
+      clickedHandle: null,
     };
   },
   props: {
@@ -62,12 +64,71 @@ export default {
   },
   mounted() {
     this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
+    document.addEventListener('mousedown', this.whichHandleClicked);
   },
   methods: {
     setOptions() {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
     },
+    whichHandleClicked(e) {
+      e.preventDefault();
+      if(e.target === this.$refs.handleMin.$el) this.clickedHandle = this.$refs.handleMin;
+      else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
+      else return;
+
+      console.log(this.clickedHandle.$el);
+
+      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
+      document.addEventListener('mousemove', this.onDrag);
+      document.addEventListener('mouseup', this.onDragEnd);
+    },
+    onDrag(e) {
+      e.preventDefault();
+      this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
+      this.clickedHandle.xOffset = this.clickedHandle.currentX;
+
+      if (this.clickedHandle.xOffset < 0) {
+        this.clickedHandle.xOffset = 0;
+      }
+
+      if(this.clickedHandle.xOffset > this.barWidth){
+        this.clickedHandle.xOffset = this.barWidth;
+      }
+      this.setTranslate();
+      console.log("handle drag!");
+    },
+    onDragEnd(e) {
+      e.preventDefault();
+      this.clickedHandle = null;
+      document.removeEventListener('mousemove', this.onDrag);
+      document.removeEventListener('mouseup', this.onDragEnd);
+      console.log("end..");
+    },
+    setTranslate() {
+      const barPosition = (this.clickedHandle.xOffset / this.barWidth);
+      this.currentVal = Math.round(100 * barPosition);
+      this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
+    },
+    keyboardEvent() {
+      window.addEventListener('keydown', (e) => {
+        e.preventDefault();
+        // left arrow
+        if (e.keyCode === 37) {
+          if(this.clickedHandle.xOffset <= 0) {
+            this.clickedHandle.xOffset = 0;
+            return this.setTranslate();
+          }
+          this.clickedHandle.xOffset -= 10;
+          this.setTranslate();
+        }
+        // right arrow
+        if (e.keyCode === 39) {
+          this.clickedHandle.xOffset += 10;
+          this.clickedHandle.setTranslate();
+        }
+      });
+    }
   },
 };
 </script>
