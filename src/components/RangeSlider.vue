@@ -4,11 +4,16 @@
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
     
       <div class="range-slider__handle">
-        <handle :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
-        <handle :handleOptions="handleOptions" ref="handleMax" :barWidth="barWidth"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMin" type="min"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMax" type="max"></handle>
       </div>
     </div>
     <range :min="min" :max="max"></range>
+    <div style="display: flex;">
+      <div>min handle : {{this.minValue}}, </div>
+      <div>max handle : {{this.maxValue}}</div>
+    </div>
+
   </div>
 </template>
 
@@ -35,12 +40,13 @@ export default {
         width: '12px',
         height: '12px',
         color: 'chocolate',
-        value: 30, // default value
       },
       barWidth: {
         type: Number,
       },
       clickedHandle: null,
+      minValue: 30,
+      maxValue: 50,
     };
   },
   props: {
@@ -64,10 +70,24 @@ export default {
   },
   mounted() {
     this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
+    this.setMinHandleValue();
+    this.setMaxHandleValue();
     document.addEventListener('mousedown', this.whichHandleClicked);
     this.addKeyboardEvent();
   },
   methods: {
+    setMinHandleValue() {
+      const minHandlePosition = (this.minValue / this.barWidth);
+      this.minValue = Math.round(this.max * minHandlePosition);
+      this.$refs.handleMin.xOffset = this.minValue;
+      this.$refs.handleMin.$el.style.transform = `translateX(${this.minValue}px)`;
+    },
+    setMaxHandleValue() {
+      const maxHandlePosition = (this.maxValue / this.barWidth);
+      this.maxValue = Math.round(this.max * maxHandlePosition);
+      this.$refs.handleMax.xOffset = this.maxValue;
+      this.$refs.handleMax.$el.style.transform = `translateX(${this.maxValue}px)`;
+    },
     setOptions() {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
@@ -77,8 +97,6 @@ export default {
       if(e.target === this.$refs.handleMin.$el) this.clickedHandle = this.$refs.handleMin;
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
-
-      console.log(this.clickedHandle.$el);
 
       this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
       this.clickedHandle = this.clickedHandle;
@@ -90,6 +108,18 @@ export default {
       this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
       this.clickedHandle.xOffset = this.clickedHandle.currentX;
 
+      const barPosition = this.clickedHandle.currentX / this.barWidth;
+      this.clickedHandle.currentX = Math.round(this.max * barPosition);
+      
+      //check clicked Handle -> module화 해야됨
+      if(this.clickedHandle.$el.getAttribute('type') === 'max') {
+        this.maxValue = Math.round(barPosition * this.max);
+      }
+
+      if(this.clickedHandle.$el.getAttribute('type') === 'min') {
+        this.minValue = Math.round(barPosition * this.max);
+      }
+      
       if (this.clickedHandle.xOffset < 0) {
         this.clickedHandle.xOffset = 0;
       }
@@ -107,19 +137,17 @@ export default {
       console.log("end..");
     },
     setTranslate() {
-      const barPosition = (this.clickedHandle.xOffset / this.barWidth);
-      this.currentVal = Math.round(100 * barPosition);
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
     },
     addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
         if(!this.clickedHandle) return;
+
         // left arrow
         if (e.keyCode === 37) {
           if(this.clickedHandle.xOffset <= 0) {
             this.clickedHandle.xOffset = 0;
-            this.setTranslate();
             return;
           }
           this.clickedHandle.xOffset -= 10;
@@ -129,7 +157,7 @@ export default {
         if (e.keyCode === 39) {
 
           if(this.clickedHandle.xOffset >= this.barWidth){
-            console.log("overflow!");
+            this.clickedHandle.xOffset = this.barWidth;
             return;
           }
           this.clickedHandle.xOffset += 10;

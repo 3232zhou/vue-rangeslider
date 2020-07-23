@@ -19,10 +19,6 @@ export default {
       currentVal: 0,
     };
   },
-  mounted() {
-    this.xOffset = this.handleOptions.value;
-    this.setTranslate();
-  },
   computed: {
     handleStyles() {
       // console.log(this.handleOptions);
@@ -35,11 +31,11 @@ export default {
     },
   },
   methods: {
-    setTranslate() {
-      const barPosition = (this.xOffset / this.barWidth);
-      this.currentVal = Math.round(100 * barPosition);
-      this.$refs.handle.style.transform = `translateX(${this.xOffset}px)`;
-    },
+    // setTranslate() {
+    //   const barPosition = (this.xOffset / this.barWidth);
+    //   this.currentVal = Math.round(100 * barPosition);
+    //   this.$refs.handle.style.transform = `translateX(${this.xOffset}px)`;
+    // },
   },
 };
 </script>
