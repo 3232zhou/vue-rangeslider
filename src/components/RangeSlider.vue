@@ -3,7 +3,13 @@
     <div class="range-slider">
       <div class="range-slider__label--min">{{min}}</div>
       <bar class="range-slider__bar" :barOptions="barOptions"></bar>
-      <handle class="range-slider__handle" :handleOptions="handleOptions"></handle>
+      
+      <div class="range-slider__handle">
+        <handle class="range-slider__handle--min" :handleOptions="handleOptions"></handle>
+        <handle class="range-slider__handle--max" :handleOptions="handleOptions"></handle>
+
+      </div>
+
       <div class="range-slider__label--max">{{max}}</div>
     </div>
   </div>
@@ -72,6 +78,7 @@ export default {
   position: absolute;
 }
 .range-slider__handle {
+  display: flex;
   position: relative;
 }
 .range-slider__label--min {
