@@ -70,22 +70,22 @@ export default {
   },
   mounted() {
     this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
-    this.setMinHandleValue();
-    this.setMaxHandleValue();
+    this.setInitialHandleValue();
     document.addEventListener('mousedown', this.whichHandleClicked);
     this.addKeyboardEvent();
   },
   methods: {
-    setMinHandleValue() {
+    setInitialHandleValue() {
       const minHandlePosition = (this.minValue / this.barWidth);
-      this.minValue = Math.round(this.max * minHandlePosition);
-      this.$refs.handleMin.xOffset = this.minValue;
-      this.$refs.handleMin.$el.style.transform = `translateX(${this.minValue}px)`;
-    },
-    setMaxHandleValue() {
       const maxHandlePosition = (this.maxValue / this.barWidth);
+
+      this.minValue = Math.round(this.max * minHandlePosition);
       this.maxValue = Math.round(this.max * maxHandlePosition);
+
+      this.$refs.handleMin.xOffset = this.minValue;
       this.$refs.handleMax.xOffset = this.maxValue;
+
+      this.$refs.handleMin.$el.style.transform = `translateX(${this.minValue}px)`;
       this.$refs.handleMax.$el.style.transform = `translateX(${this.maxValue}px)`;
     },
     setOptions() {
@@ -105,13 +105,24 @@ export default {
     },
     onDrag(e) {
       e.preventDefault();
+
+      console.log(e.pageX);
+
       this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
       this.clickedHandle.xOffset = this.clickedHandle.currentX;
 
-      const barPosition = this.clickedHandle.currentX / this.barWidth;
+      let barPosition = this.clickedHandle.currentX / this.barWidth;
       this.clickedHandle.currentX = Math.round(this.max * barPosition);
       
-      //check clicked Handle -> module화 해야됨
+      if (this.clickedHandle.xOffset <= 0) {
+        barPosition = 0;
+        this.clickedHandle.xOffset = 0;
+      }
+
+      if(this.clickedHandle.xOffset > this.barWidth){
+        this.clickedHandle.xOffset = this.barWidth;
+      }
+
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxValue = Math.round(barPosition * this.max);
       }
@@ -120,13 +131,7 @@ export default {
         this.minValue = Math.round(barPosition * this.max);
       }
       
-      if (this.clickedHandle.xOffset < 0) {
-        this.clickedHandle.xOffset = 0;
-      }
 
-      if(this.clickedHandle.xOffset > this.barWidth){
-        this.clickedHandle.xOffset = this.barWidth;
-      }
       this.setTranslate();
       console.log("handle drag!");
     },
