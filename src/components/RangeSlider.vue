@@ -4,11 +4,16 @@
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
     
       <div class="range-slider__handle">
-        <handle :handleOptions="handleOptions" ref="handleMin" :barWidth="barWidth"></handle>
-        <handle :handleOptions="handleOptions" ref="handleMax" :barWidth="barWidth"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMin" type="min"></handle>
+        <handle :handleOptions="handleOptions" ref="handleMax" type="max"></handle>
       </div>
     </div>
     <range :min="min" :max="max"></range>
+    <div style="display: flex;">
+      <div>min handle : {{this.minValue}}, </div>
+      <div>max handle : {{this.maxValue}}</div>
+    </div>
+
   </div>
 </template>
 
@@ -32,15 +37,16 @@ export default {
         color: 'cadetblue',
       },
       handleOptions: {
-        width: '12px',
-        height: '12px',
+        width: 12,
+        height: 12,
         color: 'chocolate',
-        value: 30, // default value
       },
       barWidth: {
         type: Number,
       },
       clickedHandle: null,
+      minValue: 3,
+      maxValue: 5,
     };
   },
   props: {
@@ -50,7 +56,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 100,
+      default: 10,
     },
     bar: {
       type: Object,
@@ -64,10 +70,21 @@ export default {
   },
   mounted() {
     this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
+    this.setInitialHandleValue();
     document.addEventListener('mousedown', this.whichHandleClicked);
     this.addKeyboardEvent();
   },
   methods: {
+    setInitialHandleValue() {
+      const minHandlePosition = (this.minValue / this.max);
+      const maxHandlePosition = (this.maxValue / this.max);
+
+      this.$refs.handleMin.xOffset = minHandlePosition * this.barWidth;
+      this.$refs.handleMax.xOffset = (maxHandlePosition * this.barWidth) - this.handleOptions.width;
+
+      this.$refs.handleMin.$el.style.transform = `translateX(${this.$refs.handleMin.xOffset}px)`;
+      this.$refs.handleMax.$el.style.transform = `translateX(${this.$refs.handleMax.xOffset}px)`;
+    },
     setOptions() {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
@@ -78,25 +95,35 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
-      console.log(this.clickedHandle.$el);
-
-      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
-      this.clickedHandle = this.clickedHandle;
+      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
       this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
-      this.clickedHandle.xOffset = this.clickedHandle.currentX;
+      this.clickedHandle.xOffset = this.clickedHandle.currentX - this.handleOptions.width;
 
-      if (this.clickedHandle.xOffset < 0) {
+      let barPosition = (this.clickedHandle.currentX / this.barWidth);
+      this.clickedHandle.currentX = Math.round(this.max * barPosition);
+      
+      if (this.clickedHandle.xOffset <= 0) {
+        barPosition = 0;
         this.clickedHandle.xOffset = 0;
       }
 
       if(this.clickedHandle.xOffset > this.barWidth){
         this.clickedHandle.xOffset = this.barWidth;
       }
+
+      if(this.clickedHandle.$el.getAttribute('type') === 'max') {
+        this.maxValue = Math.round(barPosition * this.max);
+      }
+
+      if(this.clickedHandle.$el.getAttribute('type') === 'min') {
+        this.minValue = Math.round(barPosition * this.max);
+      }
+
       this.setTranslate();
       console.log("handle drag!");
     },
@@ -107,19 +134,17 @@ export default {
       console.log("end..");
     },
     setTranslate() {
-      const barPosition = (this.clickedHandle.xOffset / this.barWidth);
-      this.currentVal = Math.round(100 * barPosition);
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
     },
     addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
         if(!this.clickedHandle) return;
+
         // left arrow
         if (e.keyCode === 37) {
           if(this.clickedHandle.xOffset <= 0) {
             this.clickedHandle.xOffset = 0;
-            this.setTranslate();
             return;
           }
           this.clickedHandle.xOffset -= 10;
@@ -129,7 +154,7 @@ export default {
         if (e.keyCode === 39) {
 
           if(this.clickedHandle.xOffset >= this.barWidth){
-            console.log("overflow!");
+            this.clickedHandle.xOffset = this.barWidth;
             return;
           }
           this.clickedHandle.xOffset += 10;

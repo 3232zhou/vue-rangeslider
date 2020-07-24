@@ -19,26 +19,15 @@ export default {
       currentVal: 0,
     };
   },
-  mounted() {
-    this.xOffset = this.handleOptions.value;
-    this.setTranslate();
-  },
   computed: {
     handleStyles() {
       // console.log(this.handleOptions);
       return {
         cursor: 'pointer',
-        width: this.handleOptions.width,
-        height: this.handleOptions.height,
+        width: `${this.handleOptions.width}px`,
+        height: `${this.handleOptions.height}px`,
         backgroundColor: this.handleOptions.color,
       };
-    },
-  },
-  methods: {
-    setTranslate() {
-      const barPosition = (this.xOffset / this.barWidth);
-      this.currentVal = Math.round(100 * barPosition);
-      this.$refs.handle.style.transform = `translateX(${this.xOffset}px)`;
     },
   },
 };
