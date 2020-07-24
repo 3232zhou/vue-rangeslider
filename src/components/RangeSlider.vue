@@ -13,7 +13,6 @@
       <div>min handle : {{this.minValue}}, </div>
       <div>max handle : {{this.maxValue}}</div>
     </div>
-
   </div>
 </template>
 
@@ -112,8 +111,8 @@ export default {
         this.clickedHandle.xOffset = 0;
       }
 
-      if(this.clickedHandle.xOffset > this.barWidth){
-        this.clickedHandle.xOffset = this.barWidth;
+      if(this.clickedHandle.xOffset + (this.handleOptions.width * 2) > this.barWidth){
+        this.clickedHandle.xOffset = this.barWidth - (this.handleOptions.width * 2);
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
@@ -152,9 +151,8 @@ export default {
         }
         // right arrow
         if (e.keyCode === 39) {
-
-          if(this.clickedHandle.xOffset >= this.barWidth){
-            this.clickedHandle.xOffset = this.barWidth;
+          if(this.clickedHandle.xOffset + (this.handleOptions.width * 2) >= this.barWidth){
+            this.clickedHandle.xOffset = this.barWidth - (this.handleOptions.width * 2);
             return;
           }
           this.clickedHandle.xOffset += 10;
