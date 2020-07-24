@@ -2,17 +2,25 @@
   <div class="root">
     <div class="range-slider">
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
-    
       <div class="range-slider__handle">
-        <handle :handleOptions="handleOptions" ref="handleMin" type="min"></handle>
-        <handle :handleOptions="handleOptions" ref="handleMax" type="max"></handle>
+
+        <handle 
+        :handleOptions="handleOptions" 
+        :tooltipOptions="tooltipOptions" 
+        ref="handleMin"
+        :value="this.minValue"
+        type="min"></handle>
+
+        <handle 
+        :handleOptions="handleOptions" 
+        :tooltipOptions="tooltipOptions" 
+        ref="handleMax" 
+        :value="this.maxValue"
+        type="max"></handle>
+
       </div>
     </div>
     <range :min="min" :max="max"></range>
-    <div style="display: flex;">
-      <div>min handle : {{this.minValue}}, </div>
-      <div>max handle : {{this.maxValue}}</div>
-    </div>
   </div>
 </template>
 
@@ -40,6 +48,12 @@ export default {
         height: 12,
         color: 'chocolate',
       },
+      tooltipOptions: {
+        width: 12,
+        height: 12,
+        color: 'aquamarine',
+        visibility: false,
+      },
       barWidth: {
         type: Number,
       },
@@ -61,6 +75,9 @@ export default {
       type: Object,
     },
     handle: {
+      type: Object,
+    },
+    tooltip: {
       type: Object,
     },
   },
@@ -94,6 +111,10 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
+      this.clickedHandle.$refs.handle.__vue__.handleHover();
+      this.clickedHandle.$refs.handle.__vue__.clicked = true;
+
+      this.clickedHandle.$refs.handle.visibility = true;
       this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
@@ -124,13 +145,13 @@ export default {
       }
 
       this.setTranslate();
-      console.log("handle drag!");
     },
     onDragEnd(e) {
       e.preventDefault();
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
-      console.log("end..");
+      this.clickedHandle.$refs.handle.__vue__.clicked = false;
+      this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
     setTranslate() {
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
@@ -179,9 +200,7 @@ export default {
 .range-slider__handle {
   display: flex;
 }
-.range-slider__handle--min {
-  position: relative;
-}
+
 .range-slider__label {
   display: flex;
   justify-content: space-between;
