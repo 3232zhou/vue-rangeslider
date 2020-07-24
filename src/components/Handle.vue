@@ -3,13 +3,13 @@
     ref="handle"
     :style="handleStyles"
     v-on:mouseenter="handleHover"
-    v-on:mouseleave="handleLeave">
+    v-on:mouseleave="handleLeave"
+    >
     <transition name="fade">
       <div :style="tooltipStyles" v-show="this.visibility">
         {{this.value}}
       </div>
     </transition>
-
   </div>
   
 </template>
@@ -31,9 +31,10 @@ export default {
 
       },
       visibility: true,
+      clicked: false,
     };
   },
-  mounted() {
+  beforeMount() {
     if (!this.tooltipOptions.visibility) this.visibility = false;
   },
   computed: {
@@ -64,9 +65,8 @@ export default {
       if(!this.tooltipOptions.visibility) this.visibility = true;
     },
     handleLeave() {
-      if(!this.tooltipOptions.visibility) {
-        this.visibility = false;
-      }
+      if(this.clicked) return;
+      if(!this.tooltipOptions.visibility) this.visibility = false;
     }
   },
 };

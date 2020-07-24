@@ -2,20 +2,22 @@
   <div class="root">
     <div class="range-slider">
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
-    
       <div class="range-slider__handle">
+
         <handle 
         :handleOptions="handleOptions" 
         :tooltipOptions="tooltipOptions" 
         ref="handleMin"
         :value="this.minValue"
         type="min"></handle>
+
         <handle 
         :handleOptions="handleOptions" 
         :tooltipOptions="tooltipOptions" 
         ref="handleMax" 
         :value="this.maxValue"
         type="max"></handle>
+
       </div>
     </div>
     <range :min="min" :max="max"></range>
@@ -109,6 +111,10 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
+      this.clickedHandle.$refs.handle.__vue__.handleHover();
+      this.clickedHandle.$refs.handle.__vue__.clicked = true;
+
+      this.clickedHandle.$refs.handle.visibility = true;
       this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
@@ -144,6 +150,8 @@ export default {
       e.preventDefault();
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
+      this.clickedHandle.$refs.handle.__vue__.clicked = false;
+      this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
     setTranslate() {
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
