@@ -2,7 +2,8 @@
   <div 
     ref="handle"
     :style="handleStyles"
-    v-on:mouseover="handleHover">
+    v-on:mouseenter="handleHover"
+    v-on:mouseleave="handleLeave">
     <div :style="tooltipStyles" :ref="tooltip" v-show="this.visibility">
       {{this.value}}
     </div>
@@ -30,7 +31,6 @@ export default {
     };
   },
   mounted() {
-    //props에서 visibility 체크 여부 확인
     if (!this.tooltipOptions.visibility) this.visibility = false;
   },
   computed: {
@@ -58,8 +58,13 @@ export default {
   },
   methods: {
     handleHover() {
-
+      if(!this.tooltipOptions.visibility) this.visibility = true;
     },
+    handleLeave() {
+      if(!this.tooltipOptions.visibility) {
+         this.visibility = false;
+      }
+    }
   },
 };
 </script>

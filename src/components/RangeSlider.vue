@@ -50,7 +50,7 @@ export default {
         width: 12,
         height: 12,
         color: 'aquamarine',
-        visibility: true,
+        visibility: false,
       },
       barWidth: {
         type: Number,
