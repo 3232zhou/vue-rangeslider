@@ -4,9 +4,12 @@
     :style="handleStyles"
     v-on:mouseenter="handleHover"
     v-on:mouseleave="handleLeave">
-    <div :style="tooltipStyles" :ref="tooltip" v-show="this.visibility">
-      {{this.value}}
-    </div>
+    <transition name="fade">
+      <div :style="tooltipStyles" v-show="this.visibility">
+        {{this.value}}
+      </div>
+    </transition>
+
   </div>
   
 </template>
@@ -62,10 +65,19 @@ export default {
     },
     handleLeave() {
       if(!this.tooltipOptions.visibility) {
-         this.visibility = false;
+        this.visibility = false;
       }
     }
   },
 };
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>
 
