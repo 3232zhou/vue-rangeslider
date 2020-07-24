@@ -16,7 +16,7 @@ export default {
     }
   },
   beforeMount() {
-    this.sliceNum = this.barOptions.sliceNum? this.barOptions.sliceNum : 5;
+    this.sliceNum = this.barOptions.sliceNum? this.barOptions.sliceNum + 2 : 5;
   },
   computed: {
     barStyles() {

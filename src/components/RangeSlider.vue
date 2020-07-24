@@ -37,16 +37,16 @@ export default {
         color: 'cadetblue',
       },
       handleOptions: {
-        width: '12px',
-        height: '12px',
+        width: 12,
+        height: 12,
         color: 'chocolate',
       },
       barWidth: {
         type: Number,
       },
       clickedHandle: null,
-      minValue: 30,
-      maxValue: 50,
+      minValue: 3,
+      maxValue: 5,
     };
   },
   props: {
@@ -56,7 +56,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 100,
+      default: 10,
     },
     bar: {
       type: Object,
@@ -76,17 +76,14 @@ export default {
   },
   methods: {
     setInitialHandleValue() {
-      const minHandlePosition = (this.minValue / this.barWidth);
-      const maxHandlePosition = (this.maxValue / this.barWidth);
+      const minHandlePosition = (this.minValue / this.max);
+      const maxHandlePosition = (this.maxValue / this.max);
 
-      this.minValue = Math.round(this.max * minHandlePosition);
-      this.maxValue = Math.round(this.max * maxHandlePosition);
+      this.$refs.handleMin.xOffset = minHandlePosition * this.barWidth;
+      this.$refs.handleMax.xOffset = (maxHandlePosition * this.barWidth) - this.handleOptions.width;
 
-      this.$refs.handleMin.xOffset = this.minValue;
-      this.$refs.handleMax.xOffset = this.maxValue;
-
-      this.$refs.handleMin.$el.style.transform = `translateX(${this.minValue}px)`;
-      this.$refs.handleMax.$el.style.transform = `translateX(${this.maxValue}px)`;
+      this.$refs.handleMin.$el.style.transform = `translateX(${this.$refs.handleMin.xOffset}px)`;
+      this.$refs.handleMax.$el.style.transform = `translateX(${this.$refs.handleMax.xOffset}px)`;
     },
     setOptions() {
       Object.assign(this.barOptions, this.bar);
@@ -98,20 +95,16 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
-      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset;
-      this.clickedHandle = this.clickedHandle;
+      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
-
-      console.log(e.pageX);
-
       this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
-      this.clickedHandle.xOffset = this.clickedHandle.currentX;
+      this.clickedHandle.xOffset = this.clickedHandle.currentX - this.handleOptions.width;
 
-      let barPosition = this.clickedHandle.currentX / this.barWidth;
+      let barPosition = (this.clickedHandle.currentX / this.barWidth);
       this.clickedHandle.currentX = Math.round(this.max * barPosition);
       
       if (this.clickedHandle.xOffset <= 0) {
@@ -130,7 +123,6 @@ export default {
       if(this.clickedHandle.$el.getAttribute('type') === 'min') {
         this.minValue = Math.round(barPosition * this.max);
       }
-      
 
       this.setTranslate();
       console.log("handle drag!");
