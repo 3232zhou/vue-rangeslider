@@ -179,9 +179,7 @@ export default {
 .range-slider__handle {
   display: flex;
 }
-.range-slider__handle--min {
-  position: relative;
-}
+
 .range-slider__label {
   display: flex;
   justify-content: space-between;

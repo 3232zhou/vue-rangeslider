@@ -2,9 +2,11 @@
   <div 
     ref="handle"
     :style="handleStyles"
+    v-on:mouseover="handleHover"
   >
+    <div :style="tooltipStyles">30</div>
   </div>
-
+  
 </template>
 
 <script>
@@ -29,9 +31,21 @@ export default {
         backgroundColor: this.handleOptions.color,
       };
     },
+    tooltipStyles() {
+      return {
+        position: 'absolute',
+        backgroundColor: 'aquamarine',
+        top: `${this.handleOptions.width}px`,
+        left: '50%',
+        transform: 'translateX(-50%)',
+      }
+    }
+  },
+  methods: {
+    handleHover() {
+      console.log("hovered");
+    },
   },
 };
 </script>
 
-<style scoped>
-</style>
