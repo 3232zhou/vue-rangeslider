@@ -4,15 +4,21 @@
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
     
       <div class="range-slider__handle">
-        <handle :handleOptions="handleOptions" ref="handleMin" type="min"></handle>
-        <handle :handleOptions="handleOptions" ref="handleMax" type="max"></handle>
+        <handle 
+        :handleOptions="handleOptions" 
+        :tooltipOptions="tooltipOptions" 
+        ref="handleMin"
+        :value="this.minValue"
+        type="min"></handle>
+        <handle 
+        :handleOptions="handleOptions" 
+        :tooltipOptions="tooltipOptions" 
+        ref="handleMax" 
+        :value="this.maxValue"
+        type="max"></handle>
       </div>
     </div>
     <range :min="min" :max="max"></range>
-    <div style="display: flex;">
-      <div>min handle : {{this.minValue}}, </div>
-      <div>max handle : {{this.maxValue}}</div>
-    </div>
   </div>
 </template>
 
@@ -40,6 +46,12 @@ export default {
         height: 12,
         color: 'chocolate',
       },
+      tooltipOptions: {
+        width: 12,
+        height: 12,
+        color: 'aquamarine',
+        visibility: true,
+      },
       barWidth: {
         type: Number,
       },
@@ -61,6 +73,9 @@ export default {
       type: Object,
     },
     handle: {
+      type: Object,
+    },
+    tooltip: {
       type: Object,
     },
   },
@@ -124,13 +139,11 @@ export default {
       }
 
       this.setTranslate();
-      console.log("handle drag!");
     },
     onDragEnd(e) {
       e.preventDefault();
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
-      console.log("end..");
     },
     setTranslate() {
       this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
