@@ -58,6 +58,9 @@ export default {
       clickedHandle: null,
       minValue: 3,
       maxValue: 5,
+      check: true,
+      minPosition: 0,
+      maxPosition: 0,
     };
   },
   props: {
@@ -90,14 +93,14 @@ export default {
   },
   methods: {
     setInitialHandleValue() {
-      const minHandlePosition = (this.minValue / this.max);
-      const maxHandlePosition = (this.maxValue / this.max);
+      this.minPosition = this.minValue / this.max;
+      this.maxPosition = this.maxValue / this.max;
 
-      this.$refs.handleMin.xOffset = minHandlePosition * this.barWidth;
-      this.$refs.handleMax.xOffset = (maxHandlePosition * this.barWidth) - this.handleOptions.width;
+      const minPercentage = this.minPosition * 100;
+      const maxPercentage = this.maxPosition * 100;
 
-      this.$refs.handleMin.$el.style.transform = `translateX(${this.$refs.handleMin.xOffset}px)`;
-      this.$refs.handleMax.$el.style.transform = `translateX(${this.$refs.handleMax.xOffset}px)`;
+      this.$refs.handleMin.$el.style.left = `${minPercentage}%`;
+      this.$refs.handleMax.$el.style.left = `${maxPercentage}%`;
     },
     setOptions() {
       Object.assign(this.barOptions, this.bar);
@@ -109,43 +112,38 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
-      this.clickedHandle.$refs.handle.__vue__.handleHover();
-      this.clickedHandle.$refs.handle.__vue__.clicked = true;
+      // this.clickedHandle.$refs.handle.__vue__.handleHover();
+      // this.clickedHandle.$refs.handle.__vue__.clicked = true;
 
-      this.clickedHandle.$refs.handle.visibility = true;
-      this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
+      // this.clickedHandle.$refs.handle.visibility = true;
+      // this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
+            
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
-      this.clickedHandle.currentX = e.pageX - this.clickedHandle.initialX;
-      this.clickedHandle.xOffset = this.clickedHandle.currentX - this.handleOptions.width;
-
-      let barPosition = (this.clickedHandle.currentX / this.barWidth);
-      this.clickedHandle.currentX = Math.round(this.max * barPosition);
-      
-      if (this.clickedHandle.xOffset <= 0) {
-        barPosition = 0;
-        this.clickedHandle.xOffset = 0;
-      }
-
-      if(this.clickedHandle.xOffset + this.handleOptions.width > this.barWidth){
-        this.clickedHandle.xOffset = this.barWidth - this.handleOptions.width;
-      }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
-        this.maxValue = Math.round(barPosition * this.max);
+        this.clickedHandle.$el.style.left = `${Math.round(e.clientX) + this.maxPosition}px`;
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'min') {
-        this.minValue = Math.round(barPosition * this.max);
+        this.clickedHandle.$el.style.left = `${Math.round(e.clientX) + this.minPosition}px`;
+      }
+      
+      if (e.clientX <= 0) {
+        this.clickedHandle.$el.style.left = '0';
       }
 
-      this.setTranslate();
+      if(e.clientX >= this.barWidth){
+        this.clickedHandle.$el.style.left = 'initial';
+        this.clickedHandle.$el.style.right = '0';
+      }
     },
     onDragEnd(e) {
       e.preventDefault();
+
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
@@ -186,6 +184,7 @@ export default {
 <style scoped>
 .range-slider {
   display: flex;
+  position: relative;
   align-items: center;
 }
 .range-slider__bar {
@@ -204,5 +203,11 @@ export default {
 }
 .range-slider__bar--max {
   position: absolute;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
