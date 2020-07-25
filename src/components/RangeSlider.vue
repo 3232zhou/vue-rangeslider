@@ -2,9 +2,8 @@
   <div class="root">
     <div class="range-slider">
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
-      <div class="range-slider__handle">
-
         <handle 
+        class="range-slider__bar--min"
         :handleOptions="handleOptions" 
         :tooltipOptions="tooltipOptions" 
         ref="handleMin"
@@ -12,13 +11,12 @@
         type="min"></handle>
 
         <handle 
+        class="range-slider__bar--max"
         :handleOptions="handleOptions" 
         :tooltipOptions="tooltipOptions" 
         ref="handleMax" 
         :value="this.maxValue"
         type="max"></handle>
-
-      </div>
     </div>
     <range :min="min" :max="max"></range>
   </div>
@@ -132,8 +130,8 @@ export default {
         this.clickedHandle.xOffset = 0;
       }
 
-      if(this.clickedHandle.xOffset + (this.handleOptions.width * 2) > this.barWidth){
-        this.clickedHandle.xOffset = this.barWidth - (this.handleOptions.width * 2);
+      if(this.clickedHandle.xOffset + this.handleOptions.width > this.barWidth){
+        this.clickedHandle.xOffset = this.barWidth - this.handleOptions.width;
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
@@ -188,21 +186,23 @@ export default {
 <style scoped>
 .range-slider {
   display: flex;
-  position: relative;
   align-items: center;
 }
 .range-slider__bar {
-  position: absolute;
   display: flex;
   flex-direction: row;
+  position: relative;
   justify-content: space-between;
-}
-.range-slider__handle {
-  display: flex;
 }
 
 .range-slider__label {
   display: flex;
   justify-content: space-between;
+}
+.range-slider__bar--min {
+  position: absolute;
+}
+.range-slider__bar--max {
+  position: absolute;
 }
 </style>
