@@ -57,8 +57,7 @@ export default {
       },
       clickedHandle: null,
       minValue: 3,
-      maxValue: 5,
-      check: true,
+      maxValue: 125,
       minPosition: 0,
       maxPosition: 0,
     };
@@ -70,7 +69,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 10,
+      default: 250,
     },
     bar: {
       type: Object,
@@ -112,24 +111,28 @@ export default {
       else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
-      // this.clickedHandle.$refs.handle.__vue__.handleHover();
-      // this.clickedHandle.$refs.handle.__vue__.clicked = true;
-
-      // this.clickedHandle.$refs.handle.visibility = true;
-      // this.clickedHandle.initialX = e.pageX - this.clickedHandle.xOffset - this.handleOptions.width;
+      this.clickedHandle.$refs.handle.__vue__.handleHover();
+      this.clickedHandle.$refs.handle.__vue__.clicked = true;
+      this.clickedHandle.$refs.handle.visibility = true;
             
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
-
+      
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
-        this.clickedHandle.$el.style.left = `${Math.round(e.clientX) + this.maxPosition}px`;
+        this.maxPosition = e.clientX / this.barWidth;
+        const maxPercentage = this.maxPosition * 100;
+        this.maxValue = Math.round(maxPercentage / (100 / this.max));
+        this.clickedHandle.$el.style.left = `${maxPercentage}%`;
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'min') {
-        this.clickedHandle.$el.style.left = `${Math.round(e.clientX) + this.minPosition}px`;
+        this.minPosition = e.clientX / this.barWidth;
+        const minPercentage = this.minPosition * 100;
+        this.minValue = Math.round(minPercentage/ (100 / this.max));
+        this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
       
       if (e.clientX <= 0) {
@@ -149,9 +152,6 @@ export default {
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
-    setTranslate() {
-      this.clickedHandle.$el.style.transform = `translateX(${this.clickedHandle.xOffset}px)`;
-    },
     addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
@@ -159,21 +159,9 @@ export default {
 
         // left arrow
         if (e.keyCode === 37) {
-          if(this.clickedHandle.xOffset <= 0) {
-            this.clickedHandle.xOffset = 0;
-            return;
-          }
-          this.clickedHandle.xOffset -= 10;
-          this.setTranslate();
         }
         // right arrow
         if (e.keyCode === 39) {
-          if(this.clickedHandle.xOffset + (this.handleOptions.width * 2) >= this.barWidth){
-            this.clickedHandle.xOffset = this.barWidth - (this.handleOptions.width * 2);
-            return;
-          }
-          this.clickedHandle.xOffset += 10;
-          this.setTranslate();
         }
       });
     }
