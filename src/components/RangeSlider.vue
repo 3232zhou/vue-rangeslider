@@ -121,6 +121,19 @@ export default {
     onDrag(e) {
       e.preventDefault();
       
+      if (e.clientX <= 0) {
+        this.clickedHandle.$el.style.left = '0';
+        this.minValue = 0;
+        return;
+      }
+
+      if(e.clientX >= this.barWidth){
+        this.clickedHandle.$el.style.left = 'initial';
+        this.clickedHandle.$el.style.right = '0';
+        this.maxValue = this.max;
+        return;
+      }
+      
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxPosition = e.clientX / this.barWidth;
         const maxPercentage = this.maxPosition * 100;
@@ -133,15 +146,6 @@ export default {
         const minPercentage = this.minPosition * 100;
         this.minValue = Math.round(minPercentage/ (100 / this.max));
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
-      }
-      
-      if (e.clientX <= 0) {
-        this.clickedHandle.$el.style.left = '0';
-      }
-
-      if(e.clientX >= this.barWidth){
-        this.clickedHandle.$el.style.left = 'initial';
-        this.clickedHandle.$el.style.right = '0';
       }
     },
     onDragEnd(e) {
