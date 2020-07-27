@@ -39,7 +39,6 @@ export default {
   },
   computed: {
     handleStyles() {
-      // console.log(this.handleOptions);
       return {
         cursor: 'pointer',
         width: `${this.handleOptions.width}px`,
@@ -47,7 +46,6 @@ export default {
         backgroundColor: this.handleOptions.color,
       };
     },
-    //object assign 하기
     tooltipStyles() {
       return {
         position: 'absolute',
@@ -57,6 +55,8 @@ export default {
         transform: 'translateX(-50%)',
         width: `${this.tooltipOptions.width}px`,
         height: `${this.tooltipOptions.height}px`,
+        lineHeight: `${this.tooltipOptions.height}px`,
+        textAlign: 'center',
       }
     }
   },

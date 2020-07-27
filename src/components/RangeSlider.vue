@@ -18,7 +18,11 @@
       :value="this.maxValue"
       type="max"></handle>
     </div>
-    <range :min="min" :max="max" :sliceNum="sliceNum"></range>
+    <range 
+    :min="min"
+    :max="max"
+    :sliceNum="sliceNum"
+    ></range>
   </div>
 </template>
 
@@ -40,16 +44,17 @@ export default {
         width: '100%',
         height: '10px',
         color: 'black',
+        sliceColor: '#049DBF',
       },
       handleOptions: {
         width: 12,
         height: 12,
-        color: 'chocolate',
+        color: '#D93D4A',
       },
       tooltipOptions: {
-        width: 12,
-        height: 12,
-        color: 'aquamarine',
+        width: 20,
+        height: 20,
+        color: '#F2C84B',
         visibility: false,
       },
       barWidth: {

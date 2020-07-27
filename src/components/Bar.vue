@@ -2,7 +2,9 @@
   <div :style="barStyles">
     <div class="range-slider__slice"
     v-for="index in sliceNum + 1"
-    :style="{left: `${slicePercent * (index-1) * (100 / max)}%`}"
+    :style="{
+      left: `${slicePercent * (index-1) * (100 / max)}%`, 
+      backgroundColor: `${barOptions.sliceColor}`}"
     :key="index">
     </div>      
   </div>
