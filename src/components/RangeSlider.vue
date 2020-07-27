@@ -101,11 +101,8 @@ export default {
       this.initialMin = this.minValue;
       this.initialMax = this.maxValue;
 
-      this.minPosition = this.minValue / (this.max - this.min);
-      this.maxPosition = this.maxValue / (this.max - this.min);
-
-      if(this.minPosition >= 1) this.minPosition -= 1;
-      if(this.maxPosition >= 1) this.maxPosition -= 1;
+      this.minPosition = Math.abs(this.min - this.minValue) / (this.max - this.min);
+      this.maxPosition = Math.abs(this.min - this.maxValue) / (this.max - this.min);
 
       const minPercentage = this.minPosition * 100;
       const maxPercentage = this.maxPosition * 100;
@@ -149,15 +146,14 @@ export default {
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxPosition = e.clientX / this.barWidth;
         const maxPercentage = this.maxPosition * 100;
-        this.maxValue = Math.round(this.maxPosition * (this.max - this.min));
+        this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${maxPercentage}%`;
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'min') {
         this.minPosition = e.clientX / this.barWidth;
         const minPercentage = this.minPosition * 100;
-        
-        this.minValue = Math.round(this.minPosition * (this.max - this.min));
+        this.minValue = Math.round(this.minPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
     },
