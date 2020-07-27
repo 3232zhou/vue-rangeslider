@@ -1,31 +1,25 @@
 <template>
-    <div :style="barStyles">
-
-      <div class="range-slider__slice"
-      v-for="index in sliceNum + 1"
-      :style="{left: `${slicePercent * (index-1) * (100 / max)}%`}"
-      :key="index">
-      </div>
-      
-    </div>
+  <div :style="barStyles">
+    <div class="range-slider__slice"
+    v-for="index in sliceNum + 1"
+    :style="{left: `${slicePercent * (index-1) * (100 / max)}%`}"
+    :key="index">
+    </div>      
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Bar',
-  props: ['barOptions', 'max'],
+  props: ['barOptions', 'max', 'sliceNum'],
   data() {
     return {
-      sliceNum : {
-        type: Number
-      },
       slicePercent: {
         type: Number
       },
     }
   },
   beforeMount() {
-    this.sliceNum = this.barOptions.sliceNum? this.barOptions.sliceNum + 2 : 5;
     this.slicePercent = this.max / this.sliceNum;
   },
   computed: {
