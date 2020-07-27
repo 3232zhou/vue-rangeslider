@@ -1,9 +1,9 @@
 {
-  "name": "vue-rangeslider",
-  "version": "1.0.0",
+  "name": "@domak/vue-rangeslider",
+  "version": "0.0.0",
   "description": "A Vue.js project",
   "author": "forbid403 <forbid403@naver.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
