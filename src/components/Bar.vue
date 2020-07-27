@@ -3,10 +3,10 @@
     <div class="range-slider__slice"
     v-for="index in sliceNum + 1"
     :style="{
-      left: `${slicePercent * (index-1) * (100 / max)}%`, 
+      left: `${slicePercent * (index-1) * (100 / max)}%`,
       backgroundColor: `${barOptions.sliceColor}`}"
     :key="index">
-    </div>      
+    </div>
   </div>
 </template>
 
@@ -17,9 +17,9 @@ export default {
   data() {
     return {
       slicePercent: {
-        type: Number
+        type: Number,
       },
-    }
+    };
   },
   beforeMount() {
     this.slicePercent = this.max / this.sliceNum;

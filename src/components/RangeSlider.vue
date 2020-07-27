@@ -2,23 +2,23 @@
   <div class="root">
     <div class="range-slider">
       <bar class="range-slider__bar" :barOptions="barOptions" ref="bar" :max="max" :sliceNum="sliceNum"></bar>
-      <handle 
+      <handle
       class="range-slider__bar--min"
-      :handleOptions="handleOptions" 
-      :tooltipOptions="tooltipOptions" 
+      :handleOptions="handleOptions"
+      :tooltipOptions="tooltipOptions"
       ref="handleMin"
       :value="this.minValue"
       type="min"></handle>
 
-      <handle 
+      <handle
       class="range-slider__bar--max"
-      :handleOptions="handleOptions" 
-      :tooltipOptions="tooltipOptions" 
-      ref="handleMax" 
+      :handleOptions="handleOptions"
+      :tooltipOptions="tooltipOptions"
+      ref="handleMax"
       :value="this.maxValue"
       type="max"></handle>
     </div>
-    <range 
+    <range
     :min="min"
     :max="max"
     :sliceNum="sliceNum"
@@ -121,41 +121,40 @@ export default {
     },
     whichHandleClicked(e) {
       e.preventDefault();
-      if(e.target === this.$refs.handleMin.$el) this.clickedHandle = this.$refs.handleMin;
-      else if(e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
+      if (e.target === this.$refs.handleMin.$el) this.clickedHandle = this.$refs.handleMin;
+      else if (e.target === this.$refs.handleMax.$el) this.clickedHandle = this.$refs.handleMax;
       else return;
 
       this.clickedHandle.$refs.handle.__vue__.handleHover();
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
       this.clickedHandle.$refs.handle.visibility = true;
-            
+
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
-      
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
         this.minValue = this.initialMin;
         return;
       }
 
-      if(e.clientX >= this.barWidth){
+      if (e.clientX >= this.barWidth) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.maxValue = this.max;
         return;
       }
-      
-      if(this.clickedHandle.$el.getAttribute('type') === 'max') {
+
+      if (this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxPosition = e.clientX / this.barWidth;
         const maxPercentage = this.maxPosition * 100;
         this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${maxPercentage}%`;
       }
 
-      if(this.clickedHandle.$el.getAttribute('type') === 'min') {
+      if (this.clickedHandle.$el.getAttribute('type') === 'min') {
         this.minPosition = e.clientX / this.barWidth;
         const minPercentage = this.minPosition * 100;
         this.minValue = Math.round(this.minPosition * (this.max - this.min)) + this.min;
@@ -173,16 +172,14 @@ export default {
     addKeyboardEvent() {
       window.addEventListener('keydown', (e) => {
         e.preventDefault();
-        if(!this.clickedHandle) return;
+        if (!this.clickedHandle) return;
 
         // left arrow
-        if (e.keyCode === 37) {
-        }
+        if (e.keyCode === 37) {}
         // right arrow
-        if (e.keyCode === 39) {
-        }
+        if (e.keyCode === 39) {}
       });
-    }
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     ref="handle"
     :style="handleStyles"
     v-on:mouseenter="handleHover"
@@ -11,7 +11,6 @@
       </div>
     </transition>
   </div>
-  
 </template>
 
 <script>
@@ -57,17 +56,17 @@ export default {
         height: `${this.tooltipOptions.height}px`,
         lineHeight: `${this.tooltipOptions.height}px`,
         textAlign: 'center',
-      }
-    }
+      };
+    },
   },
   methods: {
     handleHover() {
-      if(!this.tooltipOptions.visibility) this.visibility = true;
+      if (!this.tooltipOptions.visibility) this.visibility = true;
     },
     handleLeave() {
-      if(this.clicked) return;
-      if(!this.tooltipOptions.visibility) this.visibility = false;
-    }
+      if (this.clicked) return;
+      if (!this.tooltipOptions.visibility) this.visibility = false;
+    },
   },
 };
 </script>

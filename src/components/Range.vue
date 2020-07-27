@@ -1,8 +1,8 @@
 <template>
   <div class="range-slider__range">
-    <div 
+    <div
     class="range-slider__range-label"
-    v-for="index in sliceNum + 1" :key="index" 
+    v-for="index in sliceNum + 1" :key="index"
     :style="{left: `${slicePercent * (index-1) * (100 / max)}%`}"
     >
       {{min + (index - 1) * (max - min) / sliceNum}}
@@ -16,9 +16,9 @@ export default {
   data() {
     return {
       slicePercent: {
-        type: Number
+        type: Number,
       },
-    }
+    };
   },
   beforeMount() {
     this.slicePercent = this.max / this.sliceNum;
@@ -29,10 +29,10 @@ export default {
         width: this.sliceOptions.width,
         height: this.sliceOptions.height,
         backgroundColor: this.sliceOptions.color,
-      }
-    }
-  }
-}
+      };
+    },
+  },
+};
 </script>
 
 <style scoped>
