@@ -1,6 +1,6 @@
 {
   "name": "@domak/vue-rangeslider",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A Vue.js project",
   "author": "forbid403 <forbid403@naver.com>",
   "private": false,
@@ -16,6 +16,7 @@
   "files": [
     "dist/*"
   ],
+  "main": "./dist/rangeslider.common.js",
   "dependencies": {
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
