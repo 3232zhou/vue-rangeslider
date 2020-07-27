@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div class="range-slider">
-      <bar class="range-slider__bar" :barOptions="barOptions" ref="bar"></bar>
+      <bar class="range-slider__bar" :barOptions="barOptions" ref="bar" :max="max"></bar>
         <handle 
         class="range-slider__bar--min"
         :handleOptions="handleOptions" 
@@ -57,7 +57,7 @@ export default {
       },
       clickedHandle: null,
       minValue: 3,
-      maxValue: 125,
+      maxValue: 5,
       minPosition: 0,
       maxPosition: 0,
     };
@@ -183,9 +183,7 @@ export default {
   display: flex;
   flex-direction: row;
   position: relative;
-  justify-content: space-between;
 }
-
 .range-slider__label {
   display: flex;
   justify-content: space-between;
