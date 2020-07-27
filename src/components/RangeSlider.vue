@@ -1,24 +1,24 @@
 <template>
   <div class="root">
     <div class="range-slider">
-      <bar class="range-slider__bar" :barOptions="barOptions" ref="bar" :max="max"></bar>
-        <handle 
-        class="range-slider__bar--min"
-        :handleOptions="handleOptions" 
-        :tooltipOptions="tooltipOptions" 
-        ref="handleMin"
-        :value="this.minValue"
-        type="min"></handle>
+      <bar class="range-slider__bar" :barOptions="barOptions" ref="bar" :max="max" :sliceNum="sliceNum"></bar>
+      <handle 
+      class="range-slider__bar--min"
+      :handleOptions="handleOptions" 
+      :tooltipOptions="tooltipOptions" 
+      ref="handleMin"
+      :value="this.minValue"
+      type="min"></handle>
 
-        <handle 
-        class="range-slider__bar--max"
-        :handleOptions="handleOptions" 
-        :tooltipOptions="tooltipOptions" 
-        ref="handleMax" 
-        :value="this.maxValue"
-        type="max"></handle>
+      <handle 
+      class="range-slider__bar--max"
+      :handleOptions="handleOptions" 
+      :tooltipOptions="tooltipOptions" 
+      ref="handleMax" 
+      :value="this.maxValue"
+      type="max"></handle>
     </div>
-    <range :min="min" :max="max"></range>
+    <range :min="min" :max="max" :sliceNum="sliceNum"></range>
   </div>
 </template>
 
@@ -38,8 +38,8 @@ export default {
     return {
       barOptions: {
         width: '100%',
-        height: '8px',
-        color: 'cadetblue',
+        height: '10px',
+        color: 'black',
       },
       handleOptions: {
         width: 12,
@@ -56,8 +56,10 @@ export default {
         type: Number,
       },
       clickedHandle: null,
-      minValue: 3,
-      maxValue: 5,
+      initialMin: 0,
+      initialMax: 0,
+      minValue: 50,
+      maxValue: 70,
       minPosition: 0,
       maxPosition: 0,
     };
@@ -69,7 +71,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 250,
+      default: 100,
     },
     bar: {
       type: Object,
@@ -79,6 +81,10 @@ export default {
     },
     tooltip: {
       type: Object,
+    },
+    sliceNum: {
+      type: Number,
+      default: 5,
     },
   },
   beforeMount() {
@@ -92,8 +98,11 @@ export default {
   },
   methods: {
     setInitialHandleValue() {
-      this.minPosition = this.minValue / this.max;
-      this.maxPosition = this.maxValue / this.max;
+      this.initialMin = this.minValue;
+      this.initialMax = this.maxValue;
+
+      this.minPosition = Math.abs(this.min - this.minValue) / (this.max - this.min);
+      this.maxPosition = Math.abs(this.min - this.maxValue) / (this.max - this.min);
 
       const minPercentage = this.minPosition * 100;
       const maxPercentage = this.maxPosition * 100;
@@ -123,7 +132,7 @@ export default {
       
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
-        this.minValue = 0;
+        this.minValue = this.initialMin;
         return;
       }
 
@@ -137,14 +146,14 @@ export default {
       if(this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxPosition = e.clientX / this.barWidth;
         const maxPercentage = this.maxPosition * 100;
-        this.maxValue = Math.round(maxPercentage / (100 / this.max));
+        this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${maxPercentage}%`;
       }
 
       if(this.clickedHandle.$el.getAttribute('type') === 'min') {
         this.minPosition = e.clientX / this.barWidth;
         const minPercentage = this.minPosition * 100;
-        this.minValue = Math.round(minPercentage/ (100 / this.max));
+        this.minValue = Math.round(this.minPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
     },
