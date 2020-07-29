@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .range-slider__range {
   position: relative;
 }

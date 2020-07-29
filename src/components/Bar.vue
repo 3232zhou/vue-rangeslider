@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .range-slider__slice {
   position: absolute;
   width: 5px;
