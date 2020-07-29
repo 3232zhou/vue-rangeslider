@@ -184,7 +184,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .range-slider {
   display: flex;
   position: relative;
