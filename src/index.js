@@ -26,4 +26,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export default RangeSlider.use(style);
+export default RangeSlider;
