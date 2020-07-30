@@ -1,6 +1,6 @@
 // import Vue from 'vue';
 import RangeSlider from "./components/RangeSlider.vue";
-import style from "./range_slider.css";
+import "./range_slider.css";
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
@@ -22,7 +22,6 @@ if (typeof window !== "undefined") {
   GlobalVue = global.Vue;
 }
 if (GlobalVue) {
-  GlobalVue.use(style);
   GlobalVue.use(plugin);
 }
 
