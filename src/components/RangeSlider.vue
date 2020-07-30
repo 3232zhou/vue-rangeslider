@@ -197,32 +197,5 @@ export default {
 </script>
 
 <style>
-.range-slider {
-  display: flex;
-  position: relative;
-  align-items: center;
-}
-.range-slider__bar {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-}
-.range-slider__label {
-  display: flex;
-  justify-content: space-between;
-}
-.range-slider__bar--min {
-  position: absolute;
-}
-.range-slider__bar--max {
-  position: absolute;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.1s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
+@import "../range_slider.css";
 </style>
