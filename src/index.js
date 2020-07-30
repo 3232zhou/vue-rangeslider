@@ -22,6 +22,7 @@ if (typeof window !== "undefined") {
   GlobalVue = global.Vue;
 }
 if (GlobalVue) {
+  GlobalVue.use(style);
   GlobalVue.use(plugin);
 }
 
