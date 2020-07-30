@@ -6,7 +6,6 @@ import style from "./range_slider.css";
 export function install(Vue) {
   if (install.installed) return;
   install.installed = true;
-  Vue.use(style);
   Vue.component("RangeSlider", RangeSlider);
 }
 
@@ -27,4 +26,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export default RangeSlider;
+export default RangeSlider.use(style);
