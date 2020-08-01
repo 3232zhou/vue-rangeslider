@@ -9,7 +9,7 @@
         :sliceNum="sliceNum"
       ></bar>
       <handle
-        class="range-slider__bar--min"
+        class="range-slider__handle--min"
         :handleOptions="handleOptions"
         :tooltipOptions="tooltipOptions"
         ref="handleMin"
@@ -18,7 +18,7 @@
       ></handle>
 
       <handle
-        class="range-slider__bar--max"
+        class="range-slider__handle--max"
         :handleOptions="handleOptions"
         :tooltipOptions="tooltipOptions"
         ref="handleMax"

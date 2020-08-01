@@ -6,7 +6,7 @@
     v-on:mouseleave="handleLeave"
     >
     <transition name="fade">
-      <div :style="tooltipStyles" v-show="this.visibility">
+      <div class="range-slider__tooltip" :style="tooltipStyles" v-show="this.visibility">
         {{this.value}}
       </div>
     </transition>

@@ -12,10 +12,10 @@
   display: flex;
   justify-content: space-between;
 }
-.range-slider__bar--min {
+.range-slider__handle--min {
   position: absolute;
 }
-.range-slider__bar--max {
+.range-slider__handle--max {
   position: absolute;
 }
 .fade-enter-active,
