@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  props: ['min', 'max', 'sliceNum', 'sliceOptions'],
+  props: ['min', 'max', 'sliceNum'],
   data() {
     return {
       slicePercent: {
@@ -22,16 +22,7 @@ export default {
   },
   beforeMount() {
     this.slicePercent = this.max / this.sliceNum;
-  },
-  computed: {
-    sliceStyles() {
-      return {
-        width: this.sliceOptions.width,
-        height: this.sliceOptions.height,
-        backgroundColor: this.sliceOptions.color,
-      };
-    },
-  },
+  }
 };
 </script>
 

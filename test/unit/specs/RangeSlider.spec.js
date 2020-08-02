@@ -40,6 +40,20 @@ describe('Bar Check', () => {
     expect(wrapper.vm.slicePercent).toBe(10);
   })
   
+  it('should have slicePercent data', ()=> {
+    const wrapper = mount(RangeSlider).findComponent(Bar);
+    expect(wrapper.vm.$data.slicePercent).toBe(20);
+  })
+
+  it('should have mounted data', ()=>{
+    const wrapper = mount(RangeSlider).findComponent(Bar);
+    const expectedData = {
+      width: '100%',
+      height: '10px',
+      backgroundColor: 'black'
+    }
+    expect(wrapper.vm.barStyles).toEqual(expectedData);
+  })
 });
 
 describe('Handle Check', ()=>{
@@ -92,9 +106,38 @@ describe('Handle Check', ()=>{
 describe('RangeSlider Check', ()=> {
 
   it('should have mousedown event listener', ()=> {
-    const wrapper = mount(RangeSlider).find({ref: 'handleMin'});
-    wrapper.trigger('mousedown');
-    expect(wrapper.vm.clickedHandle).not.toBe(null);
+    const wrapper = mount(RangeSlider);    
+    const mousedownEvent = document.dispatchEvent(new Event('mousedown'));
+    expect(mousedownEvent).toBe(true);
   })
 
+  it('should trigger keydown event', ()=> {
+    const wrapper = mount(RangeSlider);
+    wrapper.vm.clickedHandle = wrapper.find({ref: 'handleMin'}).element;
+    expect(window.dispatchEvent(new Event('keydown', { key: 'left' }))).toBe(true);
+  })
+
+  it('should handle min-handle', ()=> {
+    const wrapper = mount(RangeSlider);
+    wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMin'}).element.__vue__;
+    wrapper.vm.handleClicked();
+
+    expect(document.dispatchEvent(new Event('mousemove'))).toBe(true);
+    expect(document.dispatchEvent(new Event('mouseup'))).toBe(true);
+  })
+
+  it('should handle max-handle', ()=> {
+    const wrapper = mount(RangeSlider);
+    wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMax'}).element.__vue__;
+    wrapper.vm.handleClicked();
+
+    expect(document.dispatchEvent(new Event('mousemove'))).toBe(true);
+    expect(document.dispatchEvent(new Event('mouseup'))).toBe(true);
+  })
+
+})
+
+describe('Range test', ()=> {
+  it('', ()=> {
+  })
 })
