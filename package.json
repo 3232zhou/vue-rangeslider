@@ -16,6 +16,9 @@
   "files": [
     "dist/*"
   ],
+  "keywords": [
+    "vue", "vue-rangeslider", "rangeslider", "range", "vue-range"
+  ],
   "homepage": "https://github.com/forbid403/vue-rangeslider",
   "repository": "https://github.com/forbid403/vue-rangeslider",
   "main": "./dist/rangeslider.common.js",

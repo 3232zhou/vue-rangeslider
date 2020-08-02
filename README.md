@@ -1,6 +1,6 @@
 # vue-rangeslider
-Slider component for Vue.js
-
+Slider component for Vue.js  
+[npm](https://www.npmjs.com/package/@domak/vue-rangeslider)
 # Install
 ```
 npm i @domak/vue-ragneslider@latest
