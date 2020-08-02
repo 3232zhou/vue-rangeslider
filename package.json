@@ -1,6 +1,6 @@
 {
   "name": "@domak/vue-rangeslider",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Vue.js project",
   "author": "forbid403 <forbid403@naver.com>",
   "private": false,
@@ -17,7 +17,11 @@
     "dist/*"
   ],
   "keywords": [
-    "vue", "vue-rangeslider", "rangeslider", "range", "vue-range"
+    "vue",
+    "vue-rangeslider",
+    "rangeslider",
+    "range",
+    "vue-range"
   ],
   "homepage": "https://github.com/forbid403/vue-rangeslider",
   "repository": "https://github.com/forbid403/vue-rangeslider",
