@@ -133,6 +133,11 @@ export default {
         this.clickedHandle = this.$refs.handleMax;
       else return;
 
+      this.handleClicked();
+    },
+    handleClicked() {
+      if(!this.clickedHandle) return;
+
       this.clickedHandle.$refs.handle.__vue__.handleHover();
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
       this.clickedHandle.$refs.handle.visibility = true;

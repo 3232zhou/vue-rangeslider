@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
   verbos: true,
+  collectCoverage: true,
+  coverageReporters: ['html'],
   testURL: "http://localhost/",
   moduleFileExtensions: [
     'js',
