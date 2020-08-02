@@ -1,4 +1,5 @@
 # vue-rangeslider
+![version](https://img.shields.io/npm/v/@domak/vue-rangeslider) ![MIT](https://img.shields.io/npm/l/@domak/vue-rangeslider?color=blue) ![code-coverage](https://img.shields.io/npm/dt/@domak/vue-rangeslider)  
 Slider component for Vue.js  
 [npm](https://www.npmjs.com/package/@domak/vue-rangeslider)
 # Install
