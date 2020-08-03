@@ -78,5 +78,8 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+.range-slider__tooltip {
+  z-index: 1;
+}
 </style>
 
