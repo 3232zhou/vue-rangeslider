@@ -22,7 +22,7 @@ export default {
   },
   beforeMount() {
     this.slicePercent = this.max / this.sliceNum;
-  }
+  },
 };
 </script>
 

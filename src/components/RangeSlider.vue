@@ -40,7 +40,7 @@ export default {
   components: {
     bar: Bar,
     handle: Handle,
-    range: Range
+    range: Range,
   },
   data() {
     return {
@@ -48,21 +48,21 @@ export default {
         width: '100%',
         height: '10px',
         color: 'black',
-        sliceColor: '#049DBF'
+        sliceColor: '#049DBF',
       },
       handleOptions: {
         width: 12,
         height: 12,
-        color: '#D93D4A'
+        color: '#D93D4A',
       },
       tooltipOptions: {
         width: 20,
         height: 20,
         color: '#F2C84B',
-        visibility: false
+        visibility: false,
       },
       barWidth: {
-        type: Number
+        type: Number,
       },
       clickedHandle: null,
       initialMin: 0,
@@ -76,25 +76,25 @@ export default {
   props: {
     min: {
       type: Number,
-      default: 0
+      default: 0,
     },
     max: {
       type: Number,
-      default: 100
+      default: 100,
     },
     bar: {
-      type: Object
+      type: Object,
     },
     handle: {
-      type: Object
+      type: Object,
     },
     tooltip: {
-      type: Object
+      type: Object,
     },
     sliceNum: {
       type: Number,
-      default: 5
-    }
+      default: 5,
+    },
   },
   beforeMount() {
     this.setOptions();
@@ -132,16 +132,16 @@ export default {
     },
     whichHandleClicked(e) {
       e.preventDefault();
-      if (e.target === this.$refs.handleMin.$el)
+      if (e.target === this.$refs.handleMin.$el) {
         this.clickedHandle = this.$refs.handleMin;
-      else if (e.target === this.$refs.handleMax.$el)
+      } else if (e.target === this.$refs.handleMax.$el) {
         this.clickedHandle = this.$refs.handleMax;
-      else return;
+      } else return;
 
       this.handleClicked();
     },
     handleClicked() {
-      if(!this.clickedHandle) return;
+      if (!this.clickedHandle) return;
 
       this.clickedHandle.$refs.handle.__vue__.handleHover();
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
@@ -199,8 +199,8 @@ export default {
       // right arrow
       if (e.keyCode === 39) {
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
