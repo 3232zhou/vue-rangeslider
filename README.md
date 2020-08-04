@@ -10,7 +10,33 @@ npm i @domak/vue-ragneslider@latest
 
 # Usage
 ```js
-import RangeSlider from '@domak/vue-rangeslider';
+// default
+<template>
+  <RangeSlider></RangeSlider>
+</template>
+
+// with props
+<template>
+  <RangeSlider 
+    :handle="{
+      color: 'aquamarine',
+      width: '20px',
+      height: '20px',
+    }"
+    :min="10"
+    :max="90"
+  </RangeSlider>
+</template>
+
+<script>
+import RangeSlider from "@domak/vue-rangeslider";
+
+export default {
+  components: {
+    RangeSlider
+  }
+}
+</script>
 ```
 # Props
 |Name|Type|Default Value|Description|
@@ -21,33 +47,39 @@ import RangeSlider from '@domak/vue-rangeslider';
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)
 |sliceNum|Number|5|Number of slices|
+<br>
 
 
 ## Bar option
-|Name|Default Value|Description|
-|---|---|---|
-|width|100%|Width of bar|
-|height|10px|Height of bar|
-|color|![#000000](https://via.placeholder.com/15/000000/000000?text=+) black|Color of bar|
-|sliceColor|![#049DBF](https://via.placeholder.com/15/049dbf/000000?text=+) #049DBF|Color of slice inside the bar
+|Name|Type|Default Value|Description|
+|---|---|---|---|
+|width|string|100%|Width of bar|
+|height|string|10px|Height of bar|
+|color|string|![#000000](https://via.placeholder.com/15/000000/000000?text=+) black|Color of bar|
+|sliceColor|string|![#049DBF](https://via.placeholder.com/15/049dbf/000000?text=+) #049DBF|Color of slice inside the bar
+<br>
 
 
 ## Handle Option
-|Name|Default Value|Description|
-|---|---|---|
-|width|12px|Width of handle|
-|height|12px|Height of handle|
-|color|![#D93D4A](https://via.placeholder.com/15/d93d4a/000000?text=+) #D93D4A|Color of handle
-
+|Name|Type|Default Value|Description|
+|---|---|---|---|
+|width|string|12px|Width of handle|
+|height|string|12px|Height of handle|
+|color|string|![#D93D4A](https://via.placeholder.com/15/d93d4a/000000?text=+) #D93D4A|Color of handle
+|border|string|none|Border of handle|
+|borderRadius|string|50%|Border radius of handle|
+<br>
 
 ## Tooltip Option
-|Name|Default Value|Description|
-|---|---|---|
-|width|20px|Width of tooltip|
-|height|20px|Height of tooltip|
-|color|![#f2c84b](https://via.placeholder.com/15/f2c84b/000000?text=+) #F2C84B|Color of tooltip|
-|visibility|false|`true` Always show tooltip<br>`false` Only shows while dragging
-
+|Name|Type|Default Value|Description|
+|---|---|---|---|
+|width|string|20px|Width of tooltip|
+|height|string|20px|Height of tooltip|
+|color|string|![#f2c84b](https://via.placeholder.com/15/f2c84b/000000?text=+) #F2C84B|Color of tooltip|
+|visibility|boolean|false|`true` Always shows tooltip<br>`false` Only shows while dragging
+|border|string|none|Border of handle|
+|borderRadius|string|30%|Border radius of handle|
+<br>
 
 ---
 Feel free make a issue for this project  

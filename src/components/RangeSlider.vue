@@ -51,15 +51,17 @@ export default {
         sliceColor: '#049DBF',
       },
       handleOptions: {
-        width: 12,
-        height: 12,
+        width: '12px',
+        height: '12px',
         color: '#D93D4A',
+        borderRadius: '50%',
       },
       tooltipOptions: {
-        width: 20,
-        height: 20,
+        width: '20px',
+        height: '20px',
         color: '#F2C84B',
         visibility: false,
+        borderRadius: '30%',
       },
       barWidth: {
         type: Number,
