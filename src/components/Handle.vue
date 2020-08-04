@@ -72,14 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .1s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-.range-slider__tooltip {
-  z-index: 1;
-}
+@import '../range_slider.css';
 </style>
 

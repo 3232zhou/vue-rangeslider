@@ -26,3 +26,15 @@
 .fade-leave-to {
   opacity: 0;
 }
+.range-slider__range {
+  position: relative;
+}
+.range-slider__range-label {
+  position: absolute;
+}
+.range-slider__slice {
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  background-color:yellowgreen;
+}

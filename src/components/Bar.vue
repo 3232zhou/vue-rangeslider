@@ -37,10 +37,5 @@ export default {
 </script>
 
 <style scoped>
-.range-slider__slice {
-  position: absolute;
-  width: 5px;
-  height: 100%;
-  background-color:yellowgreen;
-}
+@import '../range_slider.css';
 </style>

@@ -27,10 +27,5 @@ export default {
 </script>
 
 <style scoped>
-.range-slider__range {
-  position: relative;
-}
-.range-slider__range-label {
-  position: absolute;
-}
+@import '../range_slider.css';
 </style>
