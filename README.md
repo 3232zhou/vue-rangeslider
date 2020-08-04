@@ -28,8 +28,8 @@ import RangeSlider from '@domak/vue-rangeslider';
 |---|---|---|
 |width|100%|Width of bar|
 |height|10px|Height of bar|
-|color|<span style="color:black">black<span>|Color of bar|
-|sliceColor|<span style="color:#049DBF">#049DBF<span>|Color of slice inside the bar
+|color|![#000000](https://via.placeholder.com/15/000000/000000?text=+) black|Color of bar|
+|sliceColor|![#049DBF](https://via.placeholder.com/15/049dbf/000000?text=+) #049DBF|Color of slice inside the bar
 
 
 ## Handle Option
@@ -37,7 +37,7 @@ import RangeSlider from '@domak/vue-rangeslider';
 |---|---|---|
 |width|12px|Width of handle|
 |height|12px|Height of handle|
-|color|<span style="color:#D93D4A">#D93D4A<span>|Color of handle
+|color|![#D93D4A](https://via.placeholder.com/15/d93d4a/000000?text=+) #D93D4A|Color of handle
 
 
 ## Tooltip Option
@@ -45,7 +45,7 @@ import RangeSlider from '@domak/vue-rangeslider';
 |---|---|---|
 |width|20px|Width of tooltip|
 |height|20px|Height of tooltip|
-|color|<span style="color:#F2C84B">#F2C84B<span>|Color of tooltip|
+|color|![#f2c84b](https://via.placeholder.com/15/f2c84b/000000?text=+) #F2C84B|Color of tooltip|
 |visibility|false|`true` Always show tooltip<br>`false` Only shows while dragging
 
 
