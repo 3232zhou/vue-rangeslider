@@ -39,7 +39,7 @@
   background-color:yellowgreen;
 }
 .range-slider__tooltip {
-  z-index: inherit;
+  z-index: 1;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
