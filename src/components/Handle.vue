@@ -40,22 +40,22 @@ export default {
     handleStyles() {
       return {
         cursor: 'pointer',
-        width: `${this.handleOptions.width}px`,
-        height: `${this.handleOptions.height}px`,
+        width: this.handleOptions.width,
+        height: this.handleOptions.height,
         backgroundColor: this.handleOptions.color,
+        border: this.handleOptions.border,
+        borderRadius: this.handleOptions.borderRadius,
       };
     },
     tooltipStyles() {
       return {
-        position: 'absolute',
-        backgroundColor: `${this.tooltipOptions.color}`,
-        top: `${this.handleOptions.width}px`,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: `${this.tooltipOptions.width}px`,
-        height: `${this.tooltipOptions.height}px`,
-        lineHeight: `${this.tooltipOptions.height}px`,
-        textAlign: 'center',
+        backgroundColor: this.tooltipOptions.color,
+        top: this.handleOptions.width,
+        width: this.tooltipOptions.width,
+        height: this.tooltipOptions.height,
+        lineHeight: this.tooltipOptions.height,
+        border: this.tooltipOptions.border,
+        borderRadius: this.tooltipOptions.borderRadius,
       };
     },
   },
