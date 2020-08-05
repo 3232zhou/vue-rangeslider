@@ -130,6 +130,7 @@ export default {
     setOptions() {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
+      Object.assign(this.tooltipOptions, this.tooltip);
     },
     whichHandleClicked(e) {
       e.preventDefault();
