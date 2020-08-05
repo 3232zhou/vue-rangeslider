@@ -16,7 +16,6 @@
         :value='this.minValue'
         type='min'
       ></handle>
-
       <handle
         class='range-slider__handle--max'
         :handleOptions='handleOptions'
