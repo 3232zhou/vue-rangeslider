@@ -5,6 +5,7 @@
     v-on:mouseenter="handleHover"
     v-on:mouseleave="handleLeave"
     >
+    <div ref="handle_hover" class="range-slider__handle" :style="handleStyles"></div>
     <transition name="fade">
       <div class="range-slider__tooltip" :style="tooltipStyles" v-show="this.visibility">
         {{this.value}}
@@ -58,14 +59,17 @@ export default {
         borderRadius: this.tooltipOptions.borderRadius,
       };
     },
+
   },
   methods: {
     handleHover() {
       if (!this.tooltipOptions.visibility) this.visibility = true;
+      this.$refs.handle_hover.classList.add('range-slider__handle--hover');
     },
     handleLeave() {
       if (this.clicked) return;
       if (!this.tooltipOptions.visibility) this.visibility = false;
+      this.$refs.handle_hover.classList.remove('range-slider__handle--hover');
     },
   },
 };

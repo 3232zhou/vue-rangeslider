@@ -45,3 +45,11 @@
   transform: translateX(-50%);
   text-align: center;
 }
+.range-slider__handle--hover {
+  transform: scale(2);
+  opacity: 0.5;
+}
+.range-slider__handle {
+  position: absolute;
+  z-index: -1;
+}
