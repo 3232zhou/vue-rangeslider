@@ -48,6 +48,7 @@ export default {
         height: '10px',
         color: 'black',
         sliceColor: '#049DBF',
+        sliceType: 'dot',
       },
       handleOptions: {
         width: '12px',

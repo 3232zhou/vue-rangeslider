@@ -47,8 +47,8 @@ export default {
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)
 |sliceNum|Number|5|Number of slices|
-|width|String|100%|Width of rangeslider|
-|height|String|none|Height of rangeslider|
+|width|string|100%|Width of rangeslider|
+|height|string|none|Height of rangeslider|
 <br>
 
 
@@ -58,7 +58,8 @@ export default {
 |width|string|100%|Width of bar|
 |height|string|10px|Height of bar|
 |color|string|![#000000](https://via.placeholder.com/15/000000/000000?text=+) black|Color of bar|
-|sliceColor|string|![#049DBF](https://via.placeholder.com/15/049dbf/000000?text=+) #049DBF|Color of slice inside the bar
+|sliceColor|string|![#049DBF](https://via.placeholder.com/15/049dbf/000000?text=+) #049DBF|Color of slice inside the bar|
+|sliceType|string|bar|`dot` Change slice to dot|
 <br>
 
 
@@ -81,7 +82,7 @@ export default {
 |visibility|boolean|false|`true` Always shows tooltip<br>`false` Only shows while dragging
 |border|string|none|Border of tooltip|
 |borderRadius|string|30%|Border radius of tooltip|
-|textColor|string|black|Text color of tooltip|
+|textColor|string|white|Text color of tooltip|
 |top|string|tooltip.height|Distance between handle and tooltip|
 <br>
 
