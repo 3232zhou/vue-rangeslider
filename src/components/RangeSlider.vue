@@ -1,69 +1,70 @@
 <template>
-  <div class='root' :style="{width: width, height: height}">
-    <div class='range-slider'>
+  <div class="root" :style="{ width: width, height: height }">
+    <div class="range-slider">
       <bar
-        class='range-slider__bar'
-        :barOptions='barOptions'
-        ref='bar'
-        :max='max'
-        :sliceNum='sliceNum'
+        class="range-slider__bar"
+        :barOptions="barOptions"
+        ref="bar"
+        :max="max"
+        :sliceNum="sliceNum"
       ></bar>
       <handle
-        class='range-slider__handle--min'
-        :handleOptions='handleOptions'
-        :tooltipOptions='tooltipOptions'
-        ref='handleMin'
-        :value='this.minValue'
-        type='min'
+        class="range-slider__handle--min"
+        :handleOptions="handleOptions"
+        :tooltipOptions="tooltipOptions"
+        ref="handleMin"
+        :value="this.minValue"
+        type="min"
       ></handle>
       <handle
-        class='range-slider__handle--max'
-        :handleOptions='handleOptions'
-        :tooltipOptions='tooltipOptions'
-        ref='handleMax'
-        :value='this.maxValue'
-        type='max'
+        class="range-slider__handle--max"
+        :handleOptions="handleOptions"
+        :tooltipOptions="tooltipOptions"
+        ref="handleMax"
+        :value="this.maxValue"
+        type="max"
       ></handle>
     </div>
-    <range :min='min' :max='max' :sliceNum='sliceNum'></range>
+    <range :min="min" :max="max" :sliceNum="sliceNum"></range>
   </div>
 </template>
 
 <script>
-import Bar from './Bar';
-import Handle from './Handle';
-import Range from './Range';
+import Bar from "./Bar";
+import Handle from "./Handle";
+import Range from "./Range";
 
 export default {
-  name: 'RangeSlider',
+  name: "RangeSlider",
   components: {
     bar: Bar,
     handle: Handle,
-    range: Range,
+    range: Range
   },
   data() {
     return {
       barOptions: {
-        width: '100%',
-        height: '10px',
-        color: 'black',
-        sliceColor: '#049DBF',
+        width: "100%",
+        height: "10px",
+        color: "black",
+        sliceColor: "#049DBF"
       },
       handleOptions: {
-        width: '12px',
-        height: '12px',
-        color: '#D93D4A',
-        borderRadius: '50%',
+        width: "12px",
+        height: "12px",
+        color: "#D93D4A",
+        borderRadius: "50%",
+        border: "5px solid blue"
       },
       tooltipOptions: {
-        width: '20px',
-        height: '20px',
-        color: '#F2C84B',
+        width: "20px",
+        height: "20px",
+        color: "#F2C84B",
         visibility: false,
-        borderRadius: '30%',
+        borderRadius: "30%"
       },
       barWidth: {
-        type: Number,
+        type: Number
       },
       clickedHandle: null,
       initialMin: 0,
@@ -71,38 +72,38 @@ export default {
       minValue: 50,
       maxValue: 70,
       minPosition: 0,
-      maxPosition: 0,
+      maxPosition: 0
     };
   },
   props: {
     min: {
       type: Number,
-      default: 0,
+      default: 0
     },
     max: {
       type: Number,
-      default: 100,
+      default: 100
     },
     bar: {
-      type: Object,
+      type: Object
     },
     handle: {
-      type: Object,
+      type: Object
     },
     tooltip: {
-      type: Object,
+      type: Object
     },
     sliceNum: {
       type: Number,
-      default: 5,
+      default: 5
     },
     width: {
       type: String,
-      default: '50%',
+      default: "50%"
     },
     height: {
       type: String,
-      default: '',
+      default: ""
     }
   },
   beforeMount() {
@@ -114,9 +115,9 @@ export default {
   },
   methods: {
     addEventListeners() {
-      document.addEventListener('mousedown', this.whichHandleClicked);
-      window.addEventListener('resize', this.setInitialHandleValue);
-      window.addEventListener('keydown', this.handleKeyboardEvent);
+      document.addEventListener("mousedown", this.whichHandleClicked);
+      window.addEventListener("resize", this.setInitialHandleValue);
+      window.addEventListener("keydown", this.handleKeyboardEvent);
     },
     setInitialHandleValue() {
       this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
@@ -157,25 +158,25 @@ export default {
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
       this.clickedHandle.$refs.handle.visibility = true;
 
-      document.addEventListener('mousemove', this.onDrag);
-      document.addEventListener('mouseup', this.onDragEnd);
+      document.addEventListener("mousemove", this.onDrag);
+      document.addEventListener("mouseup", this.onDragEnd);
     },
     onDrag(e) {
       e.preventDefault();
       if (e.clientX <= 0) {
-        this.clickedHandle.$el.style.left = '0';
+        this.clickedHandle.$el.style.left = "0";
         this.minValue = this.initialMin;
         return;
       }
 
       if (e.clientX >= this.barWidth) {
-        this.clickedHandle.$el.style.left = 'initial';
-        this.clickedHandle.$el.style.right = '0';
+        this.clickedHandle.$el.style.left = "initial";
+        this.clickedHandle.$el.style.right = "0";
         this.maxValue = this.max;
         return;
       }
 
-      if (this.clickedHandle.$el.getAttribute('type') === 'max') {
+      if (this.clickedHandle.$el.getAttribute("type") === "max") {
         this.maxPosition = e.clientX / this.barWidth;
         const maxPercentage = this.maxPosition * 100;
         this.maxValue =
@@ -183,7 +184,7 @@ export default {
         this.clickedHandle.$el.style.left = `${maxPercentage}%`;
       }
 
-      if (this.clickedHandle.$el.getAttribute('type') === 'min') {
+      if (this.clickedHandle.$el.getAttribute("type") === "min") {
         this.minPosition = e.clientX / this.barWidth;
         const minPercentage = this.minPosition * 100;
         this.minValue =
@@ -194,8 +195,8 @@ export default {
     onDragEnd(e) {
       e.preventDefault();
 
-      document.removeEventListener('mousemove', this.onDrag);
-      document.removeEventListener('mouseup', this.onDragEnd);
+      document.removeEventListener("mousemove", this.onDrag);
+      document.removeEventListener("mouseup", this.onDragEnd);
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
@@ -209,11 +210,11 @@ export default {
       // right arrow
       if (e.keyCode === 39) {
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
-@import '../range_slider.css';
+@import "../range_slider.css";
 </style>
