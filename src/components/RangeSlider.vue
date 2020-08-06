@@ -217,10 +217,10 @@ export default {
       if (e.keyCode === 39) {
       }
     },
-    getMinValue() {
+    get minValue() {
       return this.minValue;
     },
-    getMaxValue() {
+    get maxValue() {
       return this.maxValue;
     },
   },
