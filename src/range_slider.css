@@ -5,6 +5,7 @@
 }
 .range-slider__bar {
   display: flex;
+  align-items: center;
   flex-direction: row;
   position: relative;
 }
@@ -36,6 +37,13 @@
   position: absolute;
   width: 5px;
   height: 100%;
+  background-color:yellowgreen;
+}
+.range-slider__slice--dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
   background-color:yellowgreen;
 }
 .range-slider__tooltip {
