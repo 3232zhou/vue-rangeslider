@@ -79,8 +79,10 @@ export default {
 |height|string|20px|Height of tooltip|
 |color|string|![#f2c84b](https://via.placeholder.com/15/f2c84b/000000?text=+) #F2C84B|Color of tooltip|
 |visibility|boolean|false|`true` Always shows tooltip<br>`false` Only shows while dragging
-|border|string|none|Border of handle|
-|borderRadius|string|30%|Border radius of handle|
+|border|string|none|Border of tooltip|
+|borderRadius|string|30%|Border radius of tooltip|
+|textColor|string|black|Text color of tooltip|
+|top|string|tooltip.height|Distance between handle and tooltip|
 <br>
 
 ---

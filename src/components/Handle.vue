@@ -51,12 +51,13 @@ export default {
     tooltipStyles() {
       return {
         backgroundColor: this.tooltipOptions.color,
-        top: this.handleOptions.width,
+        top: this.tooltipOptions.top? this.tooltipOptions.top : this.tooltipOptions.height,
         width: this.tooltipOptions.width,
         height: this.tooltipOptions.height,
         lineHeight: this.tooltipOptions.height,
         border: this.tooltipOptions.border,
         borderRadius: this.tooltipOptions.borderRadius,
+        color: this.tooltipOptions.textColor,
       };
     },
 
