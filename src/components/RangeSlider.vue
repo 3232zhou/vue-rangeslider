@@ -1,5 +1,5 @@
 <template>
-  <div class='root'>
+  <div class='root' :style="{width: width, height: height}">
     <div class='range-slider'>
       <bar
         class='range-slider__bar'
@@ -96,6 +96,14 @@ export default {
       type: Number,
       default: 5,
     },
+    width: {
+      type: String,
+      default: '50%',
+    },
+    height: {
+      type: String,
+      default: '',
+    }
   },
   beforeMount() {
     this.setOptions();

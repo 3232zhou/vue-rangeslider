@@ -47,6 +47,8 @@ export default {
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)
 |sliceNum|Number|5|Number of slices|
+|width|String|100%|Width of rangeslider|
+|height|String|none|Height of rangeslider|
 <br>
 
 
