@@ -1,18 +1,14 @@
 <template>
   <div
-    ref="handle_hover"
+    ref="handle"
     :style="handleStyles"
     v-on:mouseenter="handleHover"
     v-on:mouseleave="handleLeave"
-  >
-    <!-- <div ref="handle_hover" class="range-slider__handle" :style="handleStyles"></div> -->
+    >
+    <div ref="handle_hover" class="range-slider__handle" :style="handleStyles"></div>
     <transition name="fade">
-      <div
-        class="range-slider__tooltip"
-        :style="tooltipStyles"
-        v-show="this.visibility"
-      >
-        {{ this.value }}
+      <div class="range-slider__tooltip" :style="tooltipStyles" v-show="this.visibility">
+        {{this.value}}
       </div>
     </transition>
   </div>
@@ -20,18 +16,22 @@
 
 <script>
 export default {
-  name: "Handle",
-  props: ["handleOptions", "tooltipOptions", "value"],
+  name: 'Handle',
+  props: ['handleOptions', 'tooltipOptions', 'value'],
   data() {
     return {
       currentX: 0,
       xOffset: 0,
       initialX: 0,
       currentVal: 0,
-      defaultHandleValue: {},
-      defaultTooltipValue: {},
+      defaultHandleValue: {
+
+      },
+      defaultTooltipValue: {
+
+      },
       visibility: true,
-      clicked: false
+      clicked: false,
     };
   },
   beforeMount() {
@@ -40,12 +40,12 @@ export default {
   computed: {
     handleStyles() {
       return {
-        cursor: "pointer",
+        cursor: 'pointer',
         width: this.handleOptions.width,
         height: this.handleOptions.height,
         backgroundColor: this.handleOptions.color,
         border: this.handleOptions.border,
-        borderRadius: this.handleOptions.borderRadius
+        borderRadius: this.handleOptions.borderRadius,
       };
     },
     tooltipStyles() {
@@ -56,24 +56,26 @@ export default {
         height: this.tooltipOptions.height,
         lineHeight: this.tooltipOptions.height,
         border: this.tooltipOptions.border,
-        borderRadius: this.tooltipOptions.borderRadius
+        borderRadius: this.tooltipOptions.borderRadius,
       };
-    }
+    },
+
   },
   methods: {
     handleHover() {
       if (!this.tooltipOptions.visibility) this.visibility = true;
-      this.$refs.handle_hover.classList.add("range-slider__handle--hover");
+      this.$refs.handle_hover.classList.add('range-slider__handle--hover');
     },
     handleLeave() {
       if (this.clicked) return;
       if (!this.tooltipOptions.visibility) this.visibility = false;
-      this.$refs.handle_hover.classList.remove("range-slider__handle--hover");
-    }
-  }
+      this.$refs.handle_hover.classList.remove('range-slider__handle--hover');
+    },
+  },
 };
 </script>
 
 <style scoped>
-@import "../range_slider.css";
+@import '../range_slider.css';
 </style>
+
