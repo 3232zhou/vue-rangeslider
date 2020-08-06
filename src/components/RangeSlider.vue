@@ -61,6 +61,7 @@ export default {
         color: '#F2C84B',
         visibility: false,
         borderRadius: '30%',
+        textColor: 'white',
       },
       barWidth: {
         type: Number,
