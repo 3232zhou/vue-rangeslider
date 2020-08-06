@@ -48,7 +48,6 @@ export default {
         height: '10px',
         color: 'black',
         sliceColor: '#049DBF',
-        sliceType: 'dot',
       },
       handleOptions: {
         width: '12px',
@@ -68,12 +67,10 @@ export default {
         type: Number,
       },
       clickedHandle: null,
-      initialMin: 0,
-      initialMax: 0,
-      minValue: 50,
-      maxValue: 70,
       minPosition: 0,
       maxPosition: 0,
+      minValue: 0,
+      maxValue: 0,
     };
   },
   props: {
@@ -105,7 +102,15 @@ export default {
     height: {
       type: String,
       default: '',
-    }
+    },
+    defaultMin: {
+      type: Number,
+      default: 50,
+    },
+    defaultMax: {
+      type: Number,
+      default: 70,
+    },
   },
   beforeMount() {
     this.setOptions();
@@ -123,8 +128,8 @@ export default {
     setInitialHandleValue() {
       this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
 
-      this.initialMin = this.minValue;
-      this.initialMax = this.maxValue;
+      this.minValue = this.defaultMin;
+      this.maxValue = this.defaultMax;
 
       this.minPosition =
         Math.abs(this.min - this.minValue) / (this.max - this.min);
@@ -166,7 +171,7 @@ export default {
       e.preventDefault();
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
-        this.minValue = this.initialMin;
+        this.minValue = this.min;
         return;
       }
 
@@ -211,6 +216,12 @@ export default {
       // right arrow
       if (e.keyCode === 39) {
       }
+    },
+    getMinValue() {
+      return this.minValue;
+    },
+    getMaxValue() {
+      return this.maxValue;
     },
   },
 };

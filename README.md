@@ -43,12 +43,14 @@ export default {
 |---|---|---|---|
 |min|Number|0|Minimum value of slider|
 |max|Number|100|Maximum value of slider|
-|bar|Object|-|[Bar Option](#bar-option)
-|handle|Object|-|[Handle Option](#handle-option)|
-|tooltip|Object|-|[Tooltip Option](#tooltip-option)
 |sliceNum|Number|5|Number of slices|
 |width|string|100%|Width of rangeslider|
 |height|string|none|Height of rangeslider|
+|bar|Object|-|[Bar Option](#bar-option)
+|handle|Object|-|[Handle Option](#handle-option)|
+|tooltip|Object|-|[Tooltip Option](#tooltip-option)|
+|defaultMin|Number|50|Default value of min handle|
+|defaultMax|Number|70|Default value of max handle|
 <br>
 
 
