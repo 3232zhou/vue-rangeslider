@@ -6,5 +6,3 @@ cache:
     - node_modules
 script:
   - npm run unit
-after_success:
-  - cat ./coverage/lcov.info | coveralls
