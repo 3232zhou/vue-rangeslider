@@ -197,6 +197,15 @@ export default {
           Math.round(this.minPosition * (this.max - this.min)) + this.min;
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
+
+      this.$emit('getMinValue', this.getMinValue());
+      this.$emit('getMaxValue', this.getMaxValue());
+    },
+    getMinValue() {
+      return this.minValue;
+    },
+    getMaxValue() {
+      return this.maxValue;
     },
     onDragEnd(e) {
       e.preventDefault();
@@ -216,12 +225,6 @@ export default {
       // right arrow
       if (e.keyCode === 39) {
       }
-    },
-    getMinValue() {
-      return this.minValue;
-    },
-    getMaxValue() {
-      return this.maxValue;
     },
   },
 };
