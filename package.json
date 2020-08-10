@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "vue-cli-service build --target lib --name rangeslider src/index.js"
+    "build": "vue-cli-service build --target lib --name rangeslider src/index.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "files": [
     "dist/*"
@@ -49,6 +50,7 @@
     "chalk": "^2.0.1",
     "chromedriver": "^84.0.1",
     "copy-webpack-plugin": "^4.0.1",
+    "coveralls": "^3.1.0",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
     "eslint": "^4.15.0",
@@ -64,6 +66,7 @@
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
