@@ -11,8 +11,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "vue-cli-service build --target lib --name rangeslider src/index.js",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "build": "vue-cli-service build --target lib --name rangeslider src/index.js"
   },
   "files": [
     "dist/*"
@@ -30,7 +29,7 @@
   "dependencies": {
     "coveralls": "^3.1.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.4.2"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.3",
@@ -87,9 +86,9 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.6.0",
+    "webpack": "^3.8.0",
     "webpack-bundle-analyzer": "^3.8.0",
-    "webpack-dev-server": "^3.1.11",
+    "webpack-dev-server": "^2.9.7",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
