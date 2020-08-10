@@ -17,5 +17,3 @@ selenium-debug.log
 *.sln
 
 .npmignore
-.coveralls.yml
-
