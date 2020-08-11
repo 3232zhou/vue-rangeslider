@@ -172,14 +172,14 @@ export default {
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
         this.minValue = this.min;
-        return;
+        return this.returnHandleValues();
       }
 
       if (e.clientX >= this.barWidth) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.maxValue = this.max;
-        return;
+        return this.returnHandleValues();
       }
 
       if (this.clickedHandle.$el.getAttribute('type') === 'max') {
@@ -198,6 +198,9 @@ export default {
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
 
+      this.returnHandleValues();
+    },
+    returnHandleValues() {
       this.$emit('getMinValue', this.getMinValue());
       this.$emit('getMaxValue', this.getMaxValue());
     },
@@ -214,6 +217,8 @@ export default {
       document.removeEventListener('mouseup', this.onDragEnd);
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
+
+      this.returnHandleValues();
     },
     handleKeyboardEvent(e) {
       e.preventDefault();
