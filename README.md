@@ -88,6 +88,14 @@ export default {
 |top|string|tooltip.height|Distance between handle and tooltip|
 <br>
 
+# Methods
+|Name|Description|
+|---|---|
+|getMinValue|Get value of min handle while dragging|
+|getMaxValue|Get value of max handle while dragging|
+
+<br>
+
 ---
 Feel free make a issue for this project  
 
