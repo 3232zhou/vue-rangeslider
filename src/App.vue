@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <router-view />
+    <RangeSlider></RangeSlider>
   </div>
 </template>
 
 <script>
+import RangeSlider from './components/RangeSlider';
 export default {
   name: 'App',
+  components: {
+    RangeSlider
+  },
 };
 </script>
 
