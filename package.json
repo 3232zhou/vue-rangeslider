@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "vue-cli-service build --target lib --name rangeslider src/index.js"
+    "build": "vue-cli-service build --target lib --name rangeslider src/index.js",
+    "coveralls": "cat test/unit/coverage/lcov.info | coveralls"
   },
   "files": [
     "dist/*"
@@ -27,7 +28,6 @@
   "repository": "https://github.com/forbid403/vue-rangeslider",
   "main": "./dist/rangeslider.common.js",
   "dependencies": {
-    "coveralls": "^3.1.0",
     "vue": "^2.5.2",
     "vue-router": "^3.4.2"
   },

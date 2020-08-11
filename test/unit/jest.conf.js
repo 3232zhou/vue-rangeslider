@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
-  verbos: true,
+  verbose: true,
   collectCoverage: true,
-  coverageReporters: ['html'],
-  testURL: "http://localhost/",
+  coverageReporters: ['lcov', 'text-summary'],
+  testURL: 'http://localhost',
   moduleFileExtensions: [
     'js',
     'json',

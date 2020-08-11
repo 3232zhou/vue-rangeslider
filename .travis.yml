@@ -6,3 +6,5 @@ cache:
     - node_modules
 script:
   - npm run unit
+after_success:
+  - npm run coveralls
