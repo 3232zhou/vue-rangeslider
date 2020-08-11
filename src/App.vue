@@ -6,10 +6,11 @@
 
 <script>
 import RangeSlider from './components/RangeSlider';
+
 export default {
   name: 'App',
   components: {
-    RangeSlider
+    RangeSlider,
   },
 };
 </script>

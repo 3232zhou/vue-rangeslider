@@ -51,7 +51,7 @@ export default {
     tooltipStyles() {
       return {
         backgroundColor: this.tooltipOptions.color,
-        top: this.tooltipOptions.top? this.tooltipOptions.top : this.tooltipOptions.height,
+        top: this.tooltipOptions.top ? this.tooltipOptions.top : this.tooltipOptions.height,
         width: this.tooltipOptions.width,
         height: this.tooltipOptions.height,
         lineHeight: this.tooltipOptions.height,
