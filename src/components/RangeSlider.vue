@@ -155,13 +155,6 @@ export default {
       Object.assign(this.tooltipOptions, this.tooltip);
       Object.assign(this.rangeOptions, this.range);
     },
-    updateFlowedValue(val) {
-      if(this.clickedHandle === this.$refs.handleMin){
-        this.minValue = val;
-      }else if(this.clickedHandle === this.$refs.handleMax){
-        this.maxValue = val;
-      }else return;
-    },
     whichHandleClicked(e) {
       e.preventDefault();
       if (e.target === this.$refs.handleMin.$el) {
@@ -197,6 +190,13 @@ export default {
       }
 
       return false;
+    },
+    updateFlowedValue(val) {
+      if(this.clickedHandle === this.$refs.handleMin){
+        this.minValue = val;
+      }else if(this.clickedHandle === this.$refs.handleMax){
+        this.maxValue = val;
+      }else return;
     },
     onDrag(e) {
       e.preventDefault();
@@ -253,11 +253,19 @@ export default {
         }
 
         // 모듈화 하기!!
-        this.minPosition -= (this.gap / this.max);
-        const minPercentage = this.minPosition * 100;
-        this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
-        this.clickedHandle.$el.style.left = `${minPercentage}%`;
-
+        // check flowed value
+        // animation (tooltip 살짝 보이기)
+        if(this.clickedHandle === this.$refs.handleMin) {
+          this.minPosition -= (this.gap / this.max);
+          const minPercentage = this.minPosition * 100;
+          this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+          this.clickedHandle.$el.style.left = `${minPercentage}%`;
+        }else {
+          this.maxPosition -= (this.gap / this.max);
+          const maxPercentage = this.maxPosition * 100;
+          this.maxValue = Math.round(this.maxPosition * (this.max - this.min) + this.min);
+          this.clickedHandle.$el.style.left = `${maxPercentage}%`;
+        }
         this.returnHandleValues();
       }
       
@@ -269,10 +277,17 @@ export default {
           return;
         }
 
-        this.minPosition += (this.gap / this.max);
-        const minPercentage = this.minPosition * 100;
-        this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
-        this.clickedHandle.$el.style.left = `${minPercentage}%`;
+        if(this.clickedHandle === this.$refs.handleMin) {
+          this.minPosition += (this.gap / this.max);
+          const minPercentage = this.minPosition * 100;
+          this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+          this.clickedHandle.$el.style.left = `${minPercentage}%`;
+        }else {
+          this.maxPosition += (this.gap / this.max);
+          const maxPercentage = this.maxPosition * 100;
+          this.maxValue = Math.round(this.maxPosition * (this.max - this.min) + this.min);
+          this.clickedHandle.$el.style.left = `${maxPercentage}%`;
+        }
 
         this.returnHandleValues();
       }
