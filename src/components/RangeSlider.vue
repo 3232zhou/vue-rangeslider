@@ -25,7 +25,7 @@
         type='max'
       ></handle>
     </div>
-    <range :min='min' :max='max' :sliceNum='sliceNum'></range>
+    <range :min='min' :max='max' :sliceNum='sliceNum' :rangeOptions='rangeOptions'></range>
   </div>
 </template>
 
@@ -66,6 +66,9 @@ export default {
       barWidth: {
         type: Number,
       },
+      rangeOptions: {
+        textColor: 'black',
+      },
       clickedHandle: null,
       minPosition: 0,
       maxPosition: 0,
@@ -89,6 +92,9 @@ export default {
       type: Object,
     },
     tooltip: {
+      type: Object,
+    },
+    range: {
       type: Object,
     },
     sliceNum: {
@@ -146,6 +152,7 @@ export default {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
       Object.assign(this.tooltipOptions, this.tooltip);
+      Object.assign(this.rangeOptions, this.range);
     },
     whichHandleClicked(e) {
       e.preventDefault();
@@ -172,14 +179,14 @@ export default {
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
         this.minValue = this.min;
-        return;
+        return this.returnHandleValues();
       }
 
       if (e.clientX >= this.barWidth) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.maxValue = this.max;
-        return;
+        return this.returnHandleValues();
       }
 
       if (this.clickedHandle.$el.getAttribute('type') === 'max') {
@@ -198,6 +205,9 @@ export default {
         this.clickedHandle.$el.style.left = `${minPercentage}%`;
       }
 
+      this.returnHandleValues();
+    },
+    returnHandleValues() {
       this.$emit('getMinValue', this.getMinValue());
       this.$emit('getMaxValue', this.getMaxValue());
     },
@@ -214,6 +224,8 @@ export default {
       document.removeEventListener('mouseup', this.onDragEnd);
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
+
+      this.returnHandleValues();
     },
     handleKeyboardEvent(e) {
       e.preventDefault();

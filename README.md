@@ -48,11 +48,12 @@ export default {
 |sliceNum|Number|5|Number of slices|
 |width|string|100%|Width of rangeslider|
 |height|string|none|Height of rangeslider|
+|defaultMin|Number|50|Default value of min handle|
+|defaultMax|Number|70|Default value of max handle|
 |bar|Object|-|[Bar Option](#bar-option)
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)|
-|defaultMin|Number|50|Default value of min handle|
-|defaultMax|Number|70|Default value of max handle|
+|range|Object|-|[Range Option](#range-option)|
 <br>
 
 
@@ -88,6 +89,13 @@ export default {
 |borderRadius|string|30%|Border radius of tooltip|
 |textColor|string|white|Text color of tooltip|
 |top|string|tooltip.height|Distance between handle and tooltip|
+<br>
+
+## Range option
+Name|Type|Default Value|Description|
+|---|---|---|---|
+|textColor|string|black|Text color of range|
+|color|string|none|Background color of range|
 <br>
 
 # Methods
