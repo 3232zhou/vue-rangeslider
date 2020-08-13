@@ -25,7 +25,7 @@
         type='max'
       ></handle>
     </div>
-    <range :min='min' :max='max' :sliceNum='sliceNum'></range>
+    <range :min='min' :max='max' :sliceNum='sliceNum' :rangeOptions='rangeOptions'></range>
   </div>
 </template>
 
@@ -66,6 +66,9 @@ export default {
       barWidth: {
         type: Number,
       },
+      rangeOptions: {
+        textColor: 'black',
+      },
       clickedHandle: null,
       minPosition: 0,
       maxPosition: 0,
@@ -89,6 +92,9 @@ export default {
       type: Object,
     },
     tooltip: {
+      type: Object,
+    },
+    range: {
       type: Object,
     },
     sliceNum: {
@@ -146,6 +152,7 @@ export default {
       Object.assign(this.barOptions, this.bar);
       Object.assign(this.handleOptions, this.handle);
       Object.assign(this.tooltipOptions, this.tooltip);
+      Object.assign(this.rangeOptions, this.range);
     },
     whichHandleClicked(e) {
       e.preventDefault();
