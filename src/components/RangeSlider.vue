@@ -154,6 +154,13 @@ export default {
       Object.assign(this.tooltipOptions, this.tooltip);
       Object.assign(this.rangeOptions, this.range);
     },
+    updateFlowedValue(val) {
+      if(this.clickedHandle === this.$refs.handleMin){
+        this.minValue = val;
+      }else if(this.clickedHandle === this.$refs.handleMax){
+        this.maxValue = val;
+      }else return;
+    },
     whichHandleClicked(e) {
       e.preventDefault();
       if (e.target === this.$refs.handleMin.$el) {
@@ -178,14 +185,14 @@ export default {
       e.preventDefault();
       if (e.clientX <= 0) {
         this.clickedHandle.$el.style.left = '0';
-        this.minValue = this.min;
+        this.updateFlowedValue(0);
         return this.returnHandleValues();
       }
 
       if (e.clientX >= this.barWidth) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
-        this.maxValue = this.max;
+        this.updateFlowedValue(this.max);
         return this.returnHandleValues();
       }
 
