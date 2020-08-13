@@ -182,20 +182,26 @@ export default {
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
-    onDrag(e) {
-      e.preventDefault();
-      if (e.clientX <= 0) {
+    checkFlowed(val) {
+      if (val <= 0) {
         this.clickedHandle.$el.style.left = '0';
         this.updateFlowedValue(0);
-        return this.returnHandleValues();
+        return true;
       }
 
-      if (e.clientX >= this.barWidth) {
+      if (val >= this.barWidth) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.updateFlowedValue(this.max);
-        return this.returnHandleValues();
+        return true;
       }
+
+      return false;
+    },
+    onDrag(e) {
+      e.preventDefault();
+
+      if(this.checkFlowed(e.clientX)) return;
 
       if (this.clickedHandle.$el.getAttribute('type') === 'max') {
         this.maxPosition = e.clientX / this.barWidth;
