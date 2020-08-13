@@ -59,7 +59,7 @@ export default {
         width: '20px',
         height: '20px',
         color: '#F2C84B',
-        visibility: false,
+        visibility: true,
         borderRadius: '30%',
         textColor: 'white',
       },
@@ -175,14 +175,14 @@ export default {
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
-    checkFlowed(val) {
+    checkFlowed(type, val) {
       if (val <= 0) {
         this.clickedHandle.$el.style.left = '0';
         this.updateFlowedValue(0);
         return true;
       }
 
-      if (val >= this.barWidth) {
+      if (val >= this.barWidth || (type == 'keyboard' && val >= 1)) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.updateFlowedValue(this.max);
@@ -194,8 +194,10 @@ export default {
     updateFlowedValue(val) {
       if(this.clickedHandle === this.$refs.handleMin){
         this.minValue = val;
+        this.minPosition = 0;
       }else if(this.clickedHandle === this.$refs.handleMax){
         this.maxValue = val;
+        this.maxPosition = 1;
       }else return;
     },
     moveMinHandle() {
@@ -211,7 +213,7 @@ export default {
     onDrag(e) {
       e.preventDefault();
 
-      if(this.checkFlowed(e.clientX)) return;
+      if(this.checkFlowed('mouse', e.clientX)) return;
 
       if(this.clickedHandle === this.$refs.handleMin) {
         this.minPosition = e.clientX / this.barWidth;
@@ -255,11 +257,13 @@ export default {
         
         if (this.clickedHandle === this.$refs.handleMin) {
           this.minPosition = this.minPosition - (this.gap / this.max);
+          if(this.checkFlowed('keyboard', this.minPosition)) return;
           this.moveMinHandle();
         } 
         
         if (this.clickedHandle === this.$refs.handleMax) {
           this.maxPosition = this.maxPosition - (this.gap / this.max);
+          if(this.checkFlowed('keyboard', this.maxPosition)) return;
           this.moveMaxHandle();
         }
 
@@ -271,11 +275,16 @@ export default {
         if(!this.clickedHandle) return;
 
         if (this.clickedHandle === this.$refs.handleMin) {
-          this.minPosition = this.minPosition + (this.gap / this.max);
+          const currentMinPosition = this.minPosition + (this.gap / this.max);
+          
+          this.minPosition = currentMinPosition;
           this.moveMinHandle();
         }
+        
         if (this.clickedHandle === this.$refs.handleMax) {
-          this.maxPosition = this.maxPosition + (this.gap / this.max);
+          const currentMaxPosition = this.maxPosition + (this.gap / this.max);
+          if(this.checkFlowed('keyboard', currentMaxPosition)) return;
+          this.maxPosition = currentMaxPosition;
           this.moveMaxHandle();
         }
 
