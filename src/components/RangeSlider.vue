@@ -74,12 +74,13 @@ export default {
       maxPosition: 0,
       minValue: 0,
       maxValue: 0,
+      gap: 3,
     };
   },
   props: {
     min: {
       type: Number,
-      default: 0,
+      default: 7,
     },
     max: {
       type: Number,
@@ -111,11 +112,11 @@ export default {
     },
     defaultMin: {
       type: Number,
-      default: 50,
+      default: 40,
     },
     defaultMax: {
       type: Number,
-      default: 70,
+      default: 75,
     },
   },
   beforeMount() {
@@ -236,13 +237,50 @@ export default {
     },
     handleKeyboardEvent(e) {
       e.preventDefault();
-      if (!this.clickedHandle) return;
+      // backspace : 8
 
       // left arrow
       if (e.keyCode === 37) {
+        if(!this.clickedHandle) {
+          console.log(' left : no clicked handle ');
+          return;
+        }
+
+        // 모듈화 하기!!
+        this.minPosition -= (this.gap / this.max);
+        const minPercentage = this.minPosition * 100;
+        this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+        this.clickedHandle.$el.style.left = `${minPercentage}%`;
+
+        this.returnHandleValues();
       }
+      
       // right arrow
       if (e.keyCode === 39) {
+        
+        if(!this.clickedHandle) {
+          console.log(' right : no clicked handle ');
+          return;
+        }
+
+        this.minPosition += (this.gap / this.max);
+        const minPercentage = this.minPosition * 100;
+        this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+        this.clickedHandle.$el.style.left = `${minPercentage}%`;
+
+        this.returnHandleValues();
+      }
+
+      //down arrow, enter
+      if (e.keyCode === 40 || e.keyCode === 13) {
+        if (!this.clickedHandle) {
+          this.clickedHandle = this.$refs.handleMin;
+          this.clickedHandle.$el.classList.add('focused');
+        } else {
+          this.clickedHandle = this.$refs.handleMax;
+          this.$refs.handleMin.$el.classList.remove('focused');
+          this.clickedHandle.$el.classList.add('focused');
+        }
       }
     },
   },
@@ -251,4 +289,7 @@ export default {
 
 <style>
 @import '../range_slider.css';
+.focused {
+  border: 5px solid yellowgreen;
+}
 </style>
