@@ -198,27 +198,31 @@ export default {
         this.maxValue = val;
       }else return;
     },
+    moveMinHandle() {
+      const minPercentage = this.minPosition * 100;
+      this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+      this.clickedHandle.$el.style.left = `${minPercentage}%`;
+    },
+    moveMaxHandle() {
+        const maxPercentage = this.maxPosition * 100;
+        this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
+        this.clickedHandle.$el.style.left = `${maxPercentage}%`;
+    },
     onDrag(e) {
       e.preventDefault();
 
       if(this.checkFlowed(e.clientX)) return;
 
-      if (this.clickedHandle.$el.getAttribute('type') === 'max') {
-        this.maxPosition = e.clientX / this.barWidth;
-        const maxPercentage = this.maxPosition * 100;
-        this.maxValue =
-          Math.round(this.maxPosition * (this.max - this.min)) + this.min;
-        this.clickedHandle.$el.style.left = `${maxPercentage}%`;
-      }
-
-      if (this.clickedHandle.$el.getAttribute('type') === 'min') {
+      if(this.clickedHandle === this.$refs.handleMin) {
         this.minPosition = e.clientX / this.barWidth;
-        const minPercentage = this.minPosition * 100;
-        this.minValue =
-          Math.round(this.minPosition * (this.max - this.min)) + this.min;
-        this.clickedHandle.$el.style.left = `${minPercentage}%`;
+        this.moveMinHandle();
       }
 
+      if(this.clickedHandle === this.$refs.handleMax) {
+        this.maxPosition = e.clientX / this.barWidth;
+        this.moveMaxHandle();
+      }
+      
       this.returnHandleValues();
     },
     returnHandleValues() {
@@ -247,46 +251,32 @@ export default {
 
       // left arrow
       if (e.keyCode === 37) {
-        if(!this.clickedHandle) {
-          console.log(' left : no clicked handle ');
-          return;
+        if(!this.clickedHandle) return;
+        
+        if (this.clickedHandle === this.$refs.handleMin) {
+          this.minPosition = this.minPosition - (this.gap / this.max);
+          this.moveMinHandle();
+        } 
+        
+        if (this.clickedHandle === this.$refs.handleMax) {
+          this.maxPosition = this.maxPosition - (this.gap / this.max);
+          this.moveMaxHandle();
         }
 
-        // 모듈화 하기!!
-        // check flowed value
-        // animation (tooltip 살짝 보이기)
-        if(this.clickedHandle === this.$refs.handleMin) {
-          this.minPosition -= (this.gap / this.max);
-          const minPercentage = this.minPosition * 100;
-          this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
-          this.clickedHandle.$el.style.left = `${minPercentage}%`;
-        }else {
-          this.maxPosition -= (this.gap / this.max);
-          const maxPercentage = this.maxPosition * 100;
-          this.maxValue = Math.round(this.maxPosition * (this.max - this.min) + this.min);
-          this.clickedHandle.$el.style.left = `${maxPercentage}%`;
-        }
         this.returnHandleValues();
       }
       
       // right arrow
       if (e.keyCode === 39) {
-        
-        if(!this.clickedHandle) {
-          console.log(' right : no clicked handle ');
-          return;
-        }
+        if(!this.clickedHandle) return;
 
-        if(this.clickedHandle === this.$refs.handleMin) {
-          this.minPosition += (this.gap / this.max);
-          const minPercentage = this.minPosition * 100;
-          this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
-          this.clickedHandle.$el.style.left = `${minPercentage}%`;
-        }else {
-          this.maxPosition += (this.gap / this.max);
-          const maxPercentage = this.maxPosition * 100;
-          this.maxValue = Math.round(this.maxPosition * (this.max - this.min) + this.min);
-          this.clickedHandle.$el.style.left = `${maxPercentage}%`;
+        if (this.clickedHandle === this.$refs.handleMin) {
+          this.minPosition = this.minPosition + (this.gap / this.max);
+          this.moveMinHandle();
+        }
+        if (this.clickedHandle === this.$refs.handleMax) {
+          this.maxPosition = this.maxPosition + (this.gap / this.max);
+          this.moveMaxHandle();
         }
 
         this.returnHandleValues();
@@ -302,6 +292,7 @@ export default {
           this.$refs.handleMin.$el.classList.remove('focused');
           this.clickedHandle.$el.classList.add('focused');
         }
+
       }
     },
   },
