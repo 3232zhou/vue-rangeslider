@@ -33,6 +33,7 @@
 import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
+import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
 
 export default {
   name: 'RangeSlider',
@@ -41,6 +42,7 @@ export default {
     handle: Handle,
     range: Range,
   },
+  mixins: [],
   data() {
     return {
       barOptions: {
@@ -127,6 +129,10 @@ export default {
     this.addEventListeners();
   },
   methods: {
+    moveLeft,
+    moveRight,
+    moveToNextHandle,
+    moveToPrevHandle,
     addEventListeners() {
       document.addEventListener('mousedown', this.whichHandleClicked);
       window.addEventListener('resize', this.setInitialHandleValue);
@@ -170,19 +176,18 @@ export default {
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
       this.clickedHandle.$refs.handle.visibility = true;
     },
-    hideTooltip() {
+    async hideTooltip() {
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
     toggleTooltip(time) {
       this.showTooltip();
-      setTimeout(this.hideTooltip, time);
+      setTimeout(() => this.hideTooltip(), time);
     },
     handleClicked() {
       if (!this.clickedHandle) return;
 
       this.showTooltip();
-
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
     },
@@ -193,28 +198,27 @@ export default {
         return true;
       }
 
-      if (val >= this.barWidth || (type == 'keyboard' && val >= 1)) {
+      if (val >= this.barWidth || (type === 'keyboard' && val >= 1)) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
         this.updateFlowedValue(this.max);
         return true;
       }
-
       return false;
     },
     updateFlowedValue(val) {
       //underflow가 아닐 수 있음
-      if(this.clickedHandle === this.$refs.handleMin){
+      if (this.clickedHandle === this.$refs.handleMin) {
         this.minValue = val;
         this.minPosition = 0;
-      }else if(this.clickedHandle === this.$refs.handleMax){
+      } else if (this.clickedHandle === this.$refs.handleMax) {
         this.maxValue = val;
         this.maxPosition = 1;
-      }else return;
+      }
     },
     moveMinHandle() {
       const minPercentage = this.minPosition * 100;
-      this.minValue = Math.round(this.minPosition * (this.max - this.min) + this.min);
+      this.minValue = Math.round(this.minPosition * (this.max - this.min)) + this.min;
       this.clickedHandle.$el.style.left = `${minPercentage}%`;
     },
     moveMaxHandle() {
@@ -225,14 +229,14 @@ export default {
     onDrag(e) {
       e.preventDefault();
 
-      if(this.checkFlowed('mouse', e.clientX)) return;
+      if (this.checkFlowed('mouse', e.clientX)) return;
 
-      if(this.clickedHandle === this.$refs.handleMin) {
+      if (this.clickedHandle === this.$refs.handleMin) {
         this.minPosition = e.clientX / this.barWidth;
         this.moveMinHandle();
       }
 
-      if(this.clickedHandle === this.$refs.handleMax) {
+      if (this.clickedHandle === this.$refs.handleMax) {
         this.maxPosition = e.clientX / this.barWidth;
         this.moveMaxHandle();
       }
@@ -263,81 +267,22 @@ export default {
 
       // left arrow
       if (e.keyCode === 37) {
-        if(!this.clickedHandle) return;
-        
-        if (this.clickedHandle === this.$refs.handleMin) {
-          this.minPosition = this.minPosition - (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
-          this.moveMinHandle();
-        } 
-        
-        if (this.clickedHandle === this.$refs.handleMax) {
-          this.maxPosition = this.maxPosition - (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
-          this.moveMaxHandle();
-        }
-        
-        this.toggleTooltip(300);
-        this.returnHandleValues();
+        this.moveLeft(e);
       }
-      
+
       // right arrow
       if (e.keyCode === 39) {
-        if(!this.clickedHandle) return;
-
-        if (this.clickedHandle === this.$refs.handleMin) {
-          this.minPosition = this.minPosition + (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
-          this.moveMinHandle();
-        }
-        
-        if (this.clickedHandle === this.$refs.handleMax) {
-          this.maxPosition = this.maxPosition + (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
-          this.moveMaxHandle();
-        }
-
-        this.toggleTooltip(300);
-        this.returnHandleValues();
+        this.moveRight(e);
       }
 
       // down arrow, enter
       if (e.keyCode === 40 || e.keyCode === 13) {
-
-        if (!this.clickedHandle) {
-          this.clickedHandle = this.$refs.handleMin;
-          return this.clickedHandle.$el.classList.add('focused');
-        } 
-
-        if (this.clickedHandle === this.$refs.handleMin) {
-          this.clickedHandle = this.$refs.handleMax;
-          this.$refs.handleMin.$el.classList.remove('focused');
-          return this.clickedHandle.$el.classList.add('focused');
-        }
-
-        if (this.clickedHandle === this.$refs.handleMax) {
-          this.clickedHandle.$el.classList.remove('focused');
-          this.clickedHandle = null;
-          return alert(this.getMinValue(), this.getMaxValue());
-        }
+        this.moveToNextHandle();
       }
-      
+
       // backspace, upper arrow
       if (e.keyCode === 8 || e.keyCode === 38) {
-
-        if(!this.clickedHandle) return;
-
-        if (this.clickedHandle === this.$refs.handleMin) {
-          this.clickedHandle.$el.classList.remove('focused');
-          this.clickedHandle = null;
-        }
-
-        if (this.clickedHandle === this.$refs.handleMax) {
-          this.clickedHandle = this.$refs.handleMin;
-          this.clickedHandle.$el.classList.add('focused');
-          this.$refs.handleMax.$el.classList.remove('focused');
-        }
-
+        this.moveToPrevHandle();
       }
     },
   },
@@ -347,6 +292,6 @@ export default {
 <style>
 @import '../range_slider.css';
 .focused {
-  border: 5px solid yellowgreen;
+  border: 2px solid rgba(255, 224, 156, 0.575);
 }
 </style>

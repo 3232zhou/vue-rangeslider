@@ -24,7 +24,7 @@ export default {
     rangeStyles() {
       return {
         color: this.rangeOptions.textColor,
-      }
+      };
     },
   },
   beforeMount() {
