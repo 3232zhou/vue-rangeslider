@@ -59,7 +59,7 @@ export default {
         width: '20px',
         height: '20px',
         color: '#F2C84B',
-        visibility: true,
+        visibility: false,
         borderRadius: '30%',
         textColor: 'white',
       },
@@ -165,12 +165,19 @@ export default {
 
       this.handleClicked();
     },
-    handleClicked() {
-      if (!this.clickedHandle) return;
-
+    showTooltip() {
       this.clickedHandle.$refs.handle.__vue__.handleHover();
       this.clickedHandle.$refs.handle.__vue__.clicked = true;
       this.clickedHandle.$refs.handle.visibility = true;
+    },
+    hideTooltip() {
+      this.clickedHandle.$refs.handle.__vue__.clicked = false;
+      this.clickedHandle.$refs.handle.__vue__.handleLeave();
+    },
+    handleClicked() {
+      if (!this.clickedHandle) return;
+
+      this.showTooltip();
 
       document.addEventListener('mousemove', this.onDrag);
       document.addEventListener('mouseup', this.onDragEnd);
@@ -192,6 +199,7 @@ export default {
       return false;
     },
     updateFlowedValue(val) {
+      //underflow가 아닐 수 있음
       if(this.clickedHandle === this.$refs.handleMin){
         this.minValue = val;
         this.minPosition = 0;
@@ -206,9 +214,9 @@ export default {
       this.clickedHandle.$el.style.left = `${minPercentage}%`;
     },
     moveMaxHandle() {
-        const maxPercentage = this.maxPosition * 100;
-        this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
-        this.clickedHandle.$el.style.left = `${maxPercentage}%`;
+      const maxPercentage = this.maxPosition * 100;
+      this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
+      this.clickedHandle.$el.style.left = `${maxPercentage}%`;
     },
     onDrag(e) {
       e.preventDefault();
@@ -242,9 +250,8 @@ export default {
 
       document.removeEventListener('mousemove', this.onDrag);
       document.removeEventListener('mouseup', this.onDragEnd);
-      this.clickedHandle.$refs.handle.__vue__.clicked = false;
-      this.clickedHandle.$refs.handle.__vue__.handleLeave();
 
+      this.hideTooltip();
       this.returnHandleValues();
     },
     handleKeyboardEvent(e) {
@@ -267,6 +274,9 @@ export default {
           this.moveMaxHandle();
         }
 
+        this.showTooltip();
+        setTimeout(this.hideTooltip, 300);
+        
         this.returnHandleValues();
       }
       
@@ -275,19 +285,19 @@ export default {
         if(!this.clickedHandle) return;
 
         if (this.clickedHandle === this.$refs.handleMin) {
-          const currentMinPosition = this.minPosition + (this.gap / this.max);
-          
-          this.minPosition = currentMinPosition;
+          this.minPosition = this.minPosition + (this.gap / this.max);
+          if(this.checkFlowed('keyboard', this.minPosition)) return;
           this.moveMinHandle();
         }
         
         if (this.clickedHandle === this.$refs.handleMax) {
-          const currentMaxPosition = this.maxPosition + (this.gap / this.max);
-          if(this.checkFlowed('keyboard', currentMaxPosition)) return;
-          this.maxPosition = currentMaxPosition;
+          this.maxPosition = this.maxPosition + (this.gap / this.max);
+          if(this.checkFlowed('keyboard', this.maxPosition)) return;
           this.moveMaxHandle();
         }
-
+        
+        this.showTooltip();
+        setTimeout(this.hideTooltip, 300);
         this.returnHandleValues();
       }
 
@@ -301,7 +311,6 @@ export default {
           this.$refs.handleMin.$el.classList.remove('focused');
           this.clickedHandle.$el.classList.add('focused');
         }
-
       }
     },
   },
