@@ -260,7 +260,6 @@ export default {
     },
     handleKeyboardEvent(e) {
       e.preventDefault();
-      // backspace : 8
 
       // left arrow
       if (e.keyCode === 37) {
@@ -277,8 +276,8 @@ export default {
           if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
           this.moveMaxHandle();
         }
-
         
+        this.toggleTooltip(300);
         this.returnHandleValues();
       }
       
@@ -302,16 +301,43 @@ export default {
         this.returnHandleValues();
       }
 
-      //down arrow, enter
+      // down arrow, enter
       if (e.keyCode === 40 || e.keyCode === 13) {
+
         if (!this.clickedHandle) {
           this.clickedHandle = this.$refs.handleMin;
-          this.clickedHandle.$el.classList.add('focused');
-        } else {
+          return this.clickedHandle.$el.classList.add('focused');
+        } 
+
+        if (this.clickedHandle === this.$refs.handleMin) {
           this.clickedHandle = this.$refs.handleMax;
           this.$refs.handleMin.$el.classList.remove('focused');
-          this.clickedHandle.$el.classList.add('focused');
+          return this.clickedHandle.$el.classList.add('focused');
         }
+
+        if (this.clickedHandle === this.$refs.handleMax) {
+          this.clickedHandle.$el.classList.remove('focused');
+          this.clickedHandle = null;
+          return alert(this.getMinValue(), this.getMaxValue());
+        }
+      }
+      
+      // backspace, upper arrow
+      if (e.keyCode === 8 || e.keyCode === 38) {
+
+        if(!this.clickedHandle) return;
+
+        if (this.clickedHandle === this.$refs.handleMin) {
+          this.clickedHandle.$el.classList.remove('focused');
+          this.clickedHandle = null;
+        }
+
+        if (this.clickedHandle === this.$refs.handleMax) {
+          this.clickedHandle = this.$refs.handleMin;
+          this.clickedHandle.$el.classList.add('focused');
+          this.$refs.handleMax.$el.classList.remove('focused');
+        }
+
       }
     },
   },
