@@ -174,6 +174,10 @@ export default {
       this.clickedHandle.$refs.handle.__vue__.clicked = false;
       this.clickedHandle.$refs.handle.__vue__.handleLeave();
     },
+    toggleTooltip(time) {
+      this.showTooltip();
+      setTimeout(this.hideTooltip, time);
+    },
     handleClicked() {
       if (!this.clickedHandle) return;
 
@@ -264,18 +268,16 @@ export default {
         
         if (this.clickedHandle === this.$refs.handleMin) {
           this.minPosition = this.minPosition - (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.minPosition)) return;
+          if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
           this.moveMinHandle();
         } 
         
         if (this.clickedHandle === this.$refs.handleMax) {
           this.maxPosition = this.maxPosition - (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.maxPosition)) return;
+          if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
           this.moveMaxHandle();
         }
 
-        this.showTooltip();
-        setTimeout(this.hideTooltip, 300);
         
         this.returnHandleValues();
       }
@@ -286,18 +288,17 @@ export default {
 
         if (this.clickedHandle === this.$refs.handleMin) {
           this.minPosition = this.minPosition + (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.minPosition)) return;
+          if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
           this.moveMinHandle();
         }
         
         if (this.clickedHandle === this.$refs.handleMax) {
           this.maxPosition = this.maxPosition + (this.gap / this.max);
-          if(this.checkFlowed('keyboard', this.maxPosition)) return;
+          if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
           this.moveMaxHandle();
         }
-        
-        this.showTooltip();
-        setTimeout(this.hideTooltip, 300);
+
+        this.toggleTooltip(300);
         this.returnHandleValues();
       }
 
