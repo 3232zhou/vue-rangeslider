@@ -77,13 +77,13 @@ export default {
       maxPosition: 0,
       minValue: 0,
       maxValue: 0,
-      gap: 3,
+      gap: 5,
     };
   },
   props: {
     min: {
       type: Number,
-      default: 7,
+      default: 0,
     },
     max: {
       type: Number,
@@ -115,11 +115,11 @@ export default {
     },
     defaultMin: {
       type: Number,
-      default: 40,
+      default: 50,
     },
     defaultMax: {
       type: Number,
-      default: 75,
+      default: 70,
     },
   },
   beforeMount() {
@@ -208,7 +208,7 @@ export default {
       return false;
     },
     updateFlowedValue(flowed) {
-      
+
       if(flowed === 'under') {
         
         if(this.clickedHandle === this.$refs.handleMin) {
