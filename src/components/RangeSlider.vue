@@ -173,13 +173,13 @@ export default {
       this.handleClicked();
     },
     showTooltip() {
-      this.clickedHandle.$refs.handle.__vue__.handleHover();
-      this.clickedHandle.$refs.handle.__vue__.clicked = true;
-      this.clickedHandle.$refs.handle.visibility = true;
+      this.clickedHandle.handleHover();
+      this.clickedHandle.clicked = true;
+      this.clickedHandle.visibility = true;
     },
-    async hideTooltip() {
-      this.clickedHandle.$refs.handle.__vue__.clicked = false;
-      this.clickedHandle.$refs.handle.__vue__.handleLeave();
+    hideTooltip() {
+      this.clickedHandle.clicked = false;
+      this.clickedHandle.handleLeave();
     },
     toggleTooltip(time) {
       this.showTooltip();
@@ -267,8 +267,8 @@ export default {
       e.preventDefault();
 
       const keyCode = keyCodes.getKeyByValue(e.keyCode);
-      if (keyCode === 'LEFT') return this.moveLeft(e);
-      if (keyCode === 'RIGHT') return this.moveRight(e);
+      if (keyCode === 'LEFT') return this.moveLeft();
+      if (keyCode === 'RIGHT') return this.moveRight();
       if (keyCode === 'ENTER' || keyCode === 'DOWN') return this.moveToNextHandle();
       if (keyCode === 'BACK' || keyCode === 'UP') return this.moveToPrevHandle();
     },

@@ -4,7 +4,7 @@ module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
   verbose: true,
   collectCoverage: true,
-  coverageReporters: ['lcov', 'text-summary'],
+  coverageReporters: ['lcov', 'text-summary', 'html'],
   testURL: 'http://localhost',
   moduleFileExtensions: [
     'js',

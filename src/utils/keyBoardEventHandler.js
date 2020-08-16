@@ -1,25 +1,23 @@
-function moveLeft(e) {
-  if (e.keyCode === 37) {
-    if(!this.clickedHandle) return;
-    
-    if (this.clickedHandle === this.$refs.handleMin) {
-      this.minPosition = this.minPosition - (this.gap / this.max);
-      if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
-      this.moveMinHandle();
-    } 
-    
-    if (this.clickedHandle === this.$refs.handleMax) {
-      this.maxPosition = this.maxPosition - (this.gap / this.max);
-      if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
-      this.moveMaxHandle();
-    }
-
-    this.toggleTooltip(300);
-    this.returnHandleValues();
+function moveLeft() {
+  if(!this.clickedHandle) return;
+  
+  if (this.clickedHandle === this.$refs.handleMin) {
+    this.minPosition = this.minPosition - (this.gap / this.max);
+    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
+    this.moveMinHandle();
+  } 
+  
+  if (this.clickedHandle === this.$refs.handleMax) {
+    this.maxPosition = this.maxPosition - (this.gap / this.max);
+    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
+    this.moveMaxHandle();
   }
+
+  this.toggleTooltip(300);
+  this.returnHandleValues();
 }
 
-function moveRight(e) {
+function moveRight() {
   if(!this.clickedHandle) return;
 
   if (this.clickedHandle === this.$refs.handleMin) {
