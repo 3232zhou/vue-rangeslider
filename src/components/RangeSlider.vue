@@ -34,6 +34,7 @@ import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
 import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
+import { keyCodes } from '../utils/keyCodes';
 
 export default {
   name: 'RangeSlider',
@@ -265,25 +266,11 @@ export default {
     handleKeyboardEvent(e) {
       e.preventDefault();
 
-      // left arrow
-      if (e.keyCode === 37) {
-        this.moveLeft(e);
-      }
-
-      // right arrow
-      if (e.keyCode === 39) {
-        this.moveRight(e);
-      }
-
-      // down arrow, enter
-      if (e.keyCode === 40 || e.keyCode === 13) {
-        this.moveToNextHandle();
-      }
-
-      // backspace, upper arrow
-      if (e.keyCode === 8 || e.keyCode === 38) {
-        this.moveToPrevHandle();
-      }
+      const keyCode = keyCodes.getKeyByValue(e.keyCode);
+      if (keyCode === 'LEFT') return this.moveLeft(e);
+      if (keyCode === 'RIGHT') return this.moveRight(e);
+      if (keyCode === 'ENTER' || keyCode === 'DOWN') return this.moveToNextHandle();
+      if (keyCode === 'BACK' || keyCode === 'UP') return this.moveToPrevHandle();
     },
   },
 };

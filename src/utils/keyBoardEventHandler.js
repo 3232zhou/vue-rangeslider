@@ -1,4 +1,3 @@
-
 function moveLeft(e) {
   if (e.keyCode === 37) {
     if(!this.clickedHandle) return;
