@@ -144,8 +144,13 @@ describe('Range test', ()=> {
 })
 
 describe('Keyboard Test', ()=> {
+  
   let wrapper;
-  beforeEach(() => wrapper = mount(RangeSlider));
+  beforeEach(() => wrapper = mount(RangeSlider, {
+    propsData: {
+      keyboardMove: true,
+    }
+  }));
 
   it('should return LEFT when pushed left arrow keyboard button', ()=> {
     const event = new KeyboardEvent('keydown', {'keyCode': 37});
