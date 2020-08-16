@@ -3,8 +3,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/forbid403/vue-rangeslider/badge.svg?branch=coveralls)](https://coveralls.io/github/forbid403/vue-rangeslider?branch=coveralls)
 ![MIT](https://img.shields.io/npm/l/@domak/vue-rangeslider?color=blue) ![downloads](https://img.shields.io/npm/dt/@domak/vue-rangeslider) ![stars](https://img.shields.io/github/stars/forbid403/vue-rangeslider?color=9cf) <br>
 Your **⭐star⭐** is very helpful!!!<br>
-Slider component for Vue.js<br>
+Slider component for Vue.js
+<br>
 [npm](https://www.npmjs.com/package/@domak/vue-rangeslider)
+<br>
+[Demo](https://forbid403.github.io/vue-rangeslider-example/)
 # Install
 ```
 npm i @domak/vue-ragneslider@latest
@@ -50,11 +53,20 @@ export default {
 |height|string|none|Height of rangeslider|
 |defaultMin|Number|50|Default value of min handle|
 |defaultMax|Number|70|Default value of max handle|
+|keyboardMove|boolean|true|Move handle with keyboard [Descriptions](#keyboard-movement)|
 |bar|Object|-|[Bar Option](#bar-option)
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)|
 |range|Object|-|[Range Option](#range-option)|
 <br>
+
+## Keyboard Movement
+|Type|Key Code|Description|
+|---|---|---|
+|left|`37`|Move selected handle to left|
+|right|`39`|Move selected handle to right|
+|up, backspace|`38`, `8`|Move to next handle|
+|down, enter|`40`, `13`|Move to prev handle|
 
 
 ## Bar option
