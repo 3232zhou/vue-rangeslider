@@ -121,6 +121,10 @@ export default {
       type: Number,
       default: 70,
     },
+    keyboardMove: {
+      type: Boolean,
+      default: false,
+    },
   },
   beforeMount() {
     this.setOptions();
@@ -137,7 +141,7 @@ export default {
     addEventListeners() {
       document.addEventListener('mousedown', this.whichHandleClicked);
       window.addEventListener('resize', this.setInitialHandleValue);
-      window.addEventListener('keydown', this.handleKeyboardEvent);
+      if(this.keyboardMove) window.addEventListener('keydown', this.handleKeyboardEvent);
     },
     setInitialHandleValue() {
       this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;
