@@ -195,26 +195,40 @@ export default {
     checkFlowed(type, val) {
       if (val <= 0) {
         this.clickedHandle.$el.style.left = '0';
-        this.updateFlowedValue(0);
+        this.updateFlowedValue('under');
         return true;
       }
 
       if (val >= this.barWidth || (type === 'keyboard' && val >= 1)) {
         this.clickedHandle.$el.style.left = 'initial';
         this.clickedHandle.$el.style.right = '0';
-        this.updateFlowedValue(this.max);
+        this.updateFlowedValue('over');
         return true;
       }
       return false;
     },
-    updateFlowedValue(val) {
-      //underflow가 아닐 수 있음
-      if (this.clickedHandle === this.$refs.handleMin) {
-        this.minValue = val;
-        this.minPosition = 0;
-      } else if (this.clickedHandle === this.$refs.handleMax) {
-        this.maxValue = val;
-        this.maxPosition = 1;
+    updateFlowedValue(flowed) {
+      
+      if(flowed === 'under') {
+        
+        if(this.clickedHandle === this.$refs.handleMin) {
+          this.minValue = 0;
+          this.minPosition = 0;
+        } else {
+          this.maxValue = 0;
+          this.maxPosition = 0;
+        }
+
+      } else {
+
+        if(this.clickedHandle === this.$refs.handleMin) {
+          this.minValue = this.max;
+          this.minPosition = 1;
+        } else {
+          this.maxValue = this.max;
+          this.maxPosition = 1;
+        }
+
       }
     },
     moveMinHandle() {
