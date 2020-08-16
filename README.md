@@ -53,7 +53,7 @@ export default {
 |height|string|none|Height of rangeslider|
 |defaultMin|Number|50|Default value of min handle|
 |defaultMax|Number|70|Default value of max handle|
-|keyboardMove|boolean|true|Move handle with keyboard [Descriptions](#keyboard-movement)|
+|keyboardMove|boolean|false|Move handle with keyboard [Descriptions](#keyboard-movement)|
 |bar|Object|-|[Bar Option](#bar-option)
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)|
