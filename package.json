@@ -22,7 +22,8 @@
     "vue-rangeslider",
     "rangeslider",
     "range",
-    "vue-range"
+    "vue-range",
+    "keyboard"
   ],
   "homepage": "https://github.com/forbid403/vue-rangeslider",
   "repository": "https://github.com/forbid403/vue-rangeslider",
