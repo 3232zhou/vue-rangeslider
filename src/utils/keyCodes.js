@@ -14,4 +14,4 @@ const keyCodes = {
   }
 }
 
-export {keyCodes}
+export { keyCodes };

@@ -123,7 +123,7 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   beforeMount() {
@@ -234,6 +234,8 @@ export default {
         }
 
       }
+
+      this.returnHandleValues();
     },
     moveMinHandle() {
       const minPercentage = this.minPosition * 100;
