@@ -5,6 +5,8 @@ import RangeSlider from '@/components/RangeSlider';
 import Bar from '@/components/Bar';
 import Range from '@/components/Range';
 import Handle from '@/components/Handle';
+import {keyCodes} from '@/utils/keyCodes';
+import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '@/utils/keyBoardEventHandler';
 
 describe('Bar Check', () => {
   it('should have default bar when no option props passed', ()=>{
@@ -106,7 +108,6 @@ describe('Handle Check', ()=>{
 describe('RangeSlider Check', ()=> {
 
   it('should have mousedown event listener', ()=> {
-    const wrapper = mount(RangeSlider);    
     const mousedownEvent = document.dispatchEvent(new Event('mousedown'));
     expect(mousedownEvent).toBe(true);
   })
@@ -140,4 +141,35 @@ describe('RangeSlider Check', ()=> {
 describe('Range test', ()=> {
   it('', ()=> {
   })
+})
+
+describe('Keyboard Test', ()=> {
+  let wrapper;
+  beforeEach(() => wrapper = mount(RangeSlider));
+
+  it('should return LEFT when pushed left arrow keyboard button', ()=> {
+    const event = new KeyboardEvent('keydown', {'keyCode': 37});
+    document.dispatchEvent(event);
+    const keyCode = keyCodes.getKeyByValue(event.keyCode);
+    expect(keyCode).toBe('LEFT');
+  })
+
+  it('should select next handle when down or enter is pushed', () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 13})); // enter
+    expect(wrapper.vm.clickedHandle).toBe(wrapper.findComponent({ref: 'handleMin'}).element.__vue__);
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 40})); // down;
+    expect(wrapper.vm.clickedHandle).toBe(wrapper.findComponent({ref: 'handleMax'}).element.__vue__);
+  })
+
+  it('should select next handle when up or back is pushed', () => {
+    wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMax'}).element.__vue__;
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 38})); // up
+    expect(wrapper.vm.clickedHandle).toBe(wrapper.findComponent({ref: 'handleMin'}).element.__vue__);
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8})); // back;
+    expect(wrapper.vm.clickedHandle).toBe(null);
+  });
+
 })
