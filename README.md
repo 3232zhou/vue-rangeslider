@@ -113,8 +113,8 @@ Name|Type|Default Value|Description|
 # Methods
 |Name|Description|
 |---|---|
-|getMinValue|Get value of min handle while dragging|
-|getMaxValue|Get value of max handle while dragging|
+|getMinValue|Get value of min handle|
+|getMaxValue|Get value of max handle|
 
 <br>
 
