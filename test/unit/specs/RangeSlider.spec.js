@@ -39,12 +39,12 @@ describe('Bar Check', () => {
       }
     }).findComponent(Bar);
 
-    expect(wrapper.vm.slicePercent).toBe(10);
+    expect(wrapper.vm.slicePercent).toBe(8);
   })
   
   it('should have slicePercent data', ()=> {
     const wrapper = mount(RangeSlider).findComponent(Bar);
-    expect(wrapper.vm.$data.slicePercent).toBe(20);
+    expect(wrapper.vm.$data.slicePercent).toBe(25);
   })
 
   it('should have mounted data', ()=>{

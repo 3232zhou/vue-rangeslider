@@ -1,13 +1,16 @@
 <template>
   <div :style="barStyles">
-    <div
-    v-for="index in sliceNum + 1"
-    :style="{
-      left: `${slicePercent * (index-1) * (100 / max)}%`,
-      backgroundColor: `${barOptions.sliceColor}`}"
+    <div :style="{backgroundColor: `${barOptions.sliceColor}`, left: '0%'}"
+    :class="barOptions.sliceType === 'dot' ? 'range-slider__slice--dot' : 'range-slider__slice'"></div>
+    
+    <div v-for="index in sliceNum"
     :class="barOptions.sliceType === 'dot' ? 'range-slider__slice--dot' : 'range-slider__slice'"
+    :style="{left: `${slicePercent * index}%`, backgroundColor: `${barOptions.sliceColor}`}"
     :key="index">
     </div>
+
+    <div :style="{backgroundColor: `${barOptions.sliceColor}`, left: '100%'}"
+    :class="barOptions.sliceType === 'dot' ? 'range-slider__slice--dot' : 'range-slider__slice'"></div>
   </div>
 </template>
 
@@ -23,7 +26,7 @@ export default {
     };
   },
   beforeMount() {
-    this.slicePercent = this.max / this.sliceNum;
+    this.slicePercent = this.max / (this.sliceNum + 1);
   },
   computed: {
     barStyles() {

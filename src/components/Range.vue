@@ -1,12 +1,13 @@
 <template>
   <div class="range-slider__range">
-    <div
+    <div class="range-slider__range-label" style="left: 0%">{{min}}</div>
+    <div v-for="index in sliceNum"
     class="range-slider__range-label"
-    v-for="index in sliceNum + 1" :key="index"
-    :style="[{left: `${slicePercent * (index-1) * (100 / max)}%`,}, rangeStyles]"
-    >
-      {{min + (index - 1) * (max - min) / sliceNum}}
+    :style="[{left: `${slicePercent * index}%`}, rangeStyles]"
+    :key="index">
+    {{min + Math.round((max - min) / (sliceNum + 1) * index)}}
     </div>
+    <div class="range-slider__range-label" style="left: 100%">{{max}}</div>
   </div>
 </template>
 
@@ -28,7 +29,7 @@ export default {
     },
   },
   beforeMount() {
-    this.slicePercent = this.max / this.sliceNum;
+    this.slicePercent = this.max / (this.sliceNum + 1);
   },
 };
 </script>
