@@ -292,7 +292,4 @@ export default {
 
 <style>
 @import '../assets/range_slider.css';
-.focused {
-  border: 2px solid rgba(255, 224, 156, 0.575);
-}
 </style>
