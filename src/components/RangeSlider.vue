@@ -123,7 +123,7 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   beforeMount() {

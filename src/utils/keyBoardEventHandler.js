@@ -1,19 +1,50 @@
+const TOOLTIP_DURATION = 300;
+
+function calculateMinHandlePosition(direction) {
+  if(direction === 'LEFT') this.minPosition = this.minPosition - (this.gap / this.max);
+  if(direction === 'RIGHT') this.minPosition = this.minPosition + (this.gap / this.max);
+}
+
+function calculateMaxHandlePosition(direction) {
+  if(direction === 'LEFT') this.maxPosition = this.maxPosition - (this.gap / this.max);
+  if(direction === 'RIGHT') this.maxPosition = this.maxPosition + (this.gap / this.max);
+}
+
+function move(direction) {
+  if (!this.clickedHandle) return;
+
+  if (this.clickedHandle === this.$refs.handleMin) {
+    calculateMinHandlePosition(direction);
+    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
+    this.moveMinHandle();
+  }
+
+  if (this.clickedHandle === this.$refs.handleMax) {
+    calculateMaxHandlePosition(direction);
+    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
+    this.moveMaxHandle();
+  }
+
+  this.toggleTooltip(this.TOOLTIP_DURATION);
+  this.returnHandleValues();
+}
+
 function moveLeft() {
   if(!this.clickedHandle) return;
   
   if (this.clickedHandle === this.$refs.handleMin) {
     this.minPosition = this.minPosition - (this.gap / this.max);
-    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
+    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMinHandle();
   } 
   
   if (this.clickedHandle === this.$refs.handleMax) {
     this.maxPosition = this.maxPosition - (this.gap / this.max);
-    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
+    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMaxHandle();
   }
 
-  this.toggleTooltip(300);
+  this.toggleTooltip(TOOLTIP_DURATION);
   this.returnHandleValues();
 }
 
@@ -22,17 +53,17 @@ function moveRight() {
 
   if (this.clickedHandle === this.$refs.handleMin) {
     this.minPosition = this.minPosition + (this.gap / this.max);
-    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(300);
+    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(this.TOOLTIP_DURATION);
     this.moveMinHandle();
   }
   
   if (this.clickedHandle === this.$refs.handleMax) {
     this.maxPosition = this.maxPosition + (this.gap / this.max);
-    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(300);
+    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(this.TOOLTIP_DURATION);
     this.moveMaxHandle();
   }
 
-  this.toggleTooltip(300);
+  this.toggleTooltip(this.TOOLTIP_DURATION);
   this.returnHandleValues();
 }
 
@@ -70,4 +101,4 @@ function moveToPrevHandle() {
   }
 }
 
-export { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle }
+export { move, moveLeft, moveRight, moveToNextHandle, moveToPrevHandle }
