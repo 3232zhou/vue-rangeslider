@@ -41,5 +41,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../range_slider.css';
+@import '../assets/range_slider.css';
 </style>
