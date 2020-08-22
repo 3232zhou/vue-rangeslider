@@ -77,7 +77,6 @@ export default {
       maxPosition: 0,
       minValue: 0,
       maxValue: 0,
-      gap: 5,
     };
   },
   props: {
@@ -123,8 +122,12 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: true,
+      default: false,
     },
+    gap: {
+      type: Number,
+      default: 5,
+    }
   },
   beforeMount() {
     this.setOptions();
