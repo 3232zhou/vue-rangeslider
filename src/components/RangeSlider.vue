@@ -33,7 +33,7 @@
 import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
-import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
+import { move, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
 import { keyCodes } from '../utils/keyCodes';
 
 export default {
@@ -134,8 +134,7 @@ export default {
     this.addEventListeners();
   },
   methods: {
-    moveLeft,
-    moveRight,
+    move,
     moveToNextHandle,
     moveToPrevHandle,
     addEventListeners() {
@@ -186,6 +185,7 @@ export default {
       this.clickedHandle.handleLeave();
     },
     toggleTooltip(time) {
+      console.log(time);
       this.showTooltip();
       setTimeout(() => this.hideTooltip(), time);
     },
@@ -281,10 +281,18 @@ export default {
       e.preventDefault();
 
       const keyCode = keyCodes.getKeyByValue(e.keyCode);
-      if (keyCode === 'LEFT') return this.moveLeft();
-      if (keyCode === 'RIGHT') return this.moveRight();
+      if (keyCode === 'LEFT') return this.move(keyCode);
+      if (keyCode === 'RIGHT') return this.move(keyCode);
       if (keyCode === 'ENTER' || keyCode === 'DOWN') return this.moveToNextHandle();
       if (keyCode === 'BACK' || keyCode === 'UP') return this.moveToPrevHandle();
+    },
+    calculateMinHandlePosition(direction) {
+      if(direction === 'LEFT') this.minPosition = this.minPosition - (this.gap / this.max);
+      if(direction === 'RIGHT') this.minPosition = this.minPosition + (this.gap / this.max);
+    },
+    calculateMaxHandlePosition(direction) {
+      if(direction === 'LEFT') this.maxPosition = this.maxPosition - (this.gap / this.max);
+      if(direction === 'RIGHT') this.maxPosition = this.maxPosition + (this.gap / this.max);
     },
   },
 };
