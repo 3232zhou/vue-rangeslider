@@ -7,7 +7,7 @@
         ref='bar'
         :max='max'
         :sliceNum='sliceNum'
-      ></bar>
+      />
       <handle
         class='range-slider__handle--min'
         :handleOptions='handleOptions'
@@ -15,7 +15,7 @@
         ref='handleMin'
         :value='this.minValue'
         type='min'
-      ></handle>
+      />
       <handle
         class='range-slider__handle--max'
         :handleOptions='handleOptions'
@@ -23,9 +23,9 @@
         ref='handleMax'
         :value='this.maxValue'
         type='max'
-      ></handle>
+      />
     </div>
-    <range :min='min' :max='max' :sliceNum='sliceNum' :rangeOptions='rangeOptions'></range>
+    <range :min='min' :max='max' :sliceNum='sliceNum' :rangeOptions='rangeOptions'/>
   </div>
 </template>
 
@@ -33,7 +33,7 @@
 import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
-import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
+import { move, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
 import { keyCodes } from '../utils/keyCodes';
 
 export default {
@@ -123,7 +123,7 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   beforeMount() {
@@ -134,8 +134,7 @@ export default {
     this.addEventListeners();
   },
   methods: {
-    moveLeft,
-    moveRight,
+    move,
     moveToNextHandle,
     moveToPrevHandle,
     addEventListeners() {
@@ -212,9 +211,7 @@ export default {
       return false;
     },
     updateFlowedValue(flowed) {
-
       if(flowed === 'under') {
-        
         if(this.clickedHandle === this.$refs.handleMin) {
           this.minValue = 0;
           this.minPosition = 0;
@@ -222,9 +219,7 @@ export default {
           this.maxValue = 0;
           this.maxPosition = 0;
         }
-
       } else {
-
         if(this.clickedHandle === this.$refs.handleMin) {
           this.minValue = this.max;
           this.minPosition = 1;
@@ -232,9 +227,7 @@ export default {
           this.maxValue = this.max;
           this.maxPosition = 1;
         }
-
       }
-
       this.returnHandleValues();
     },
     moveMinHandle() {
@@ -287,18 +280,23 @@ export default {
       e.preventDefault();
 
       const keyCode = keyCodes.getKeyByValue(e.keyCode);
-      if (keyCode === 'LEFT') return this.moveLeft();
-      if (keyCode === 'RIGHT') return this.moveRight();
+      if (keyCode === 'LEFT') return this.move(keyCode);
+      if (keyCode === 'RIGHT') return this.move(keyCode);
       if (keyCode === 'ENTER' || keyCode === 'DOWN') return this.moveToNextHandle();
       if (keyCode === 'BACK' || keyCode === 'UP') return this.moveToPrevHandle();
+    },
+    calculateMinHandlePosition(direction) {
+      if(direction === 'LEFT') this.minPosition = this.minPosition - (this.gap / this.max);
+      if(direction === 'RIGHT') this.minPosition = this.minPosition + (this.gap / this.max);
+    },
+    calculateMaxHandlePosition(direction) {
+      if(direction === 'LEFT') this.maxPosition = this.maxPosition - (this.gap / this.max);
+      if(direction === 'RIGHT') this.maxPosition = this.maxPosition + (this.gap / this.max);
     },
   },
 };
 </script>
 
 <style>
-@import '../range_slider.css';
-.focused {
-  border: 2px solid rgba(255, 224, 156, 0.575);
-}
+@import '../assets/range_slider.css';
 </style>

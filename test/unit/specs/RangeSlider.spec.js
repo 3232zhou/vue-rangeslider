@@ -39,7 +39,7 @@ describe('Bar Check', () => {
       }
     }).findComponent(Bar);
 
-    expect(wrapper.vm.slicePercent).toBe(8);
+    expect(wrapper.vm.slicePercent).toBe(20);
   })
   
   it('should have slicePercent data', ()=> {
