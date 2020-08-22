@@ -1,5 +1,15 @@
 const TOOLTIP_DURATION = 300;
 
+function calculateMinHandlePosition(direction) {
+  if(direction === 'LEFT') this.minPosition = this.minPosition - (this.gap / this.max);
+  if(direction === 'RIGHT') this.minPosition = this.minPosition + (this.gap / this.max);
+};
+
+function calculateMaxHandlePosition(direction) {
+  if(direction === 'LEFT') this.maxPosition = this.maxPosition - (this.gap / this.max);
+  if(direction === 'RIGHT') this.maxPosition = this.maxPosition + (this.gap / this.max);
+};
+
 function move(direction) {
   if (!this.clickedHandle) return;
 
@@ -52,4 +62,4 @@ function moveToPrevHandle() {
   }
 }
 
-export { move, moveToNextHandle, moveToPrevHandle };
+export { move, moveToNextHandle, moveToPrevHandle, calculateMinHandlePosition, calculateMaxHandlePosition };
