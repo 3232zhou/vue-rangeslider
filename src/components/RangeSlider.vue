@@ -35,6 +35,7 @@ import Handle from './Handle';
 import Range from './Range';
 import { move, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
 import { keyCodes } from '../utils/keyCodes';
+import { getMinValue, getMaxValue } from '../utils/api';
 
 export default {
   name: 'RangeSlider',
@@ -122,7 +123,7 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     gap: {
       type: Number,
@@ -140,6 +141,8 @@ export default {
     move,
     moveToNextHandle,
     moveToPrevHandle,
+    getMinValue,
+    getMaxValue,
     addEventListeners() {
       document.addEventListener('mousedown', this.whichHandleClicked);
       window.addEventListener('resize', this.setInitialHandleValue);
@@ -263,12 +266,6 @@ export default {
     returnHandleValues() {
       this.$emit('getMinValue', this.getMinValue());
       this.$emit('getMaxValue', this.getMaxValue());
-    },
-    getMinValue() {
-      return this.minValue;
-    },
-    getMaxValue() {
-      return this.maxValue;
     },
     onDragEnd(e) {
       e.preventDefault();

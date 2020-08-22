@@ -5,13 +5,13 @@ function move(direction) {
 
   if (this.clickedHandle === this.$refs.handleMin) {
     this.calculateMinHandlePosition(direction);
-    if(this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
+    if (this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMinHandle();
   }
 
   if (this.clickedHandle === this.$refs.handleMax) {
     this.calculateMaxHandlePosition(direction);
-    if(this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
+    if (this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMaxHandle();
   }
 
@@ -19,12 +19,11 @@ function move(direction) {
   this.returnHandleValues();
 }
 
-function moveToNextHandle() {
-  
+function moveToNextHandle() { 
   if (!this.clickedHandle) {
     this.clickedHandle = this.$refs.handleMin;
     return this.clickedHandle.$el.classList.add('focused');
-  } 
+  }
 
   if (this.clickedHandle === this.$refs.handleMin) {
     this.clickedHandle = this.$refs.handleMax;
@@ -39,7 +38,7 @@ function moveToNextHandle() {
 }
 
 function moveToPrevHandle() {
-  if(!this.clickedHandle) return;
+  if (!this.clickedHandle) return;
 
   if (this.clickedHandle === this.$refs.handleMin) {
     this.clickedHandle.$el.classList.remove('focused');
@@ -53,4 +52,4 @@ function moveToPrevHandle() {
   }
 }
 
-export { move, moveToNextHandle, moveToPrevHandle }
+export { move, moveToNextHandle, moveToPrevHandle };
