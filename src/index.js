@@ -1,6 +1,6 @@
 // import Vue from 'vue';
 import RangeSlider from "./components/RangeSlider.vue";
-import "./range_slider.css";
+import "./assets/range_slider.css";
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
