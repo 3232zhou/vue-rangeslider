@@ -29,7 +29,7 @@ export default {
     },
   },
   beforeMount() {
-    this.slicePercent = this.max / (this.sliceNum + 1);
+    this.slicePercent = 100 / (this.sliceNum + 1);
   },
 };
 </script>

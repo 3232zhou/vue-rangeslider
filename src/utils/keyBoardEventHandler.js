@@ -53,4 +53,4 @@ function moveToPrevHandle() {
   }
 }
 
-export { move, moveLeft, moveRight, moveToNextHandle, moveToPrevHandle }
+export { move, moveToNextHandle, moveToPrevHandle }

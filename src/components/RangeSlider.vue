@@ -185,7 +185,6 @@ export default {
       this.clickedHandle.handleLeave();
     },
     toggleTooltip(time) {
-      console.log(time);
       this.showTooltip();
       setTimeout(() => this.hideTooltip(), time);
     },
