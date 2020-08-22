@@ -124,7 +124,7 @@ export default {
     },
     keyboardMove: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     gap: {
       type: Number,
