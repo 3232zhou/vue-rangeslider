@@ -11,7 +11,7 @@ const keyCodes = {
 
   getKeyByValue: function (keyCode) {
     return Object.keys(this.keyMap).find(key => this.keyMap[key] === keyCode);
-  }
-}
+  },
+};
 
 export { keyCodes };

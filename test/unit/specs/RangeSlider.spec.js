@@ -7,6 +7,7 @@ import Range from '@/components/Range';
 import Handle from '@/components/Handle';
 import {keyCodes} from '@/utils/keyCodes';
 import { moveLeft, moveRight, moveToNextHandle, moveToPrevHandle } from '@/utils/keyBoardEventHandler';
+import main from '@/main';
 
 describe('Bar Check', () => {
   it('should have default bar when no option props passed', ()=>{
@@ -138,10 +139,22 @@ describe('RangeSlider Check', ()=> {
 
 })
 
-describe('Range test', ()=> {
-  it('', ()=> {
+describe('main.js', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'error')
   })
-})
+
+  afterEach(() => {
+    console.log.mockRestore()
+    console.error.mockRestore()
+  })
+
+  it('init', () => {
+    expect(console.log).not.toHaveBeenCalled()
+    expect(console.error).not.toHaveBeenCalled()
+  })
+});
 
 describe('Keyboard Test', ()=> {
   
@@ -149,8 +162,29 @@ describe('Keyboard Test', ()=> {
   beforeEach(() => wrapper = mount(RangeSlider, {
     propsData: {
       keyboardMove: true,
+      gap: 5
     }
   }));
+
+  it('should move max handle by clicking left, right arrow', () => {
+    wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMax'}).element.__vue__;
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 37})); // left
+    // expect(wrapper.vm.maxValue).toBe(65);
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 39})); // right
+    // expect(wrapper.vm.maxValue).toBe(70);
+  });
+
+  it('should move min handle by clicking left, right arrow', () => {
+    wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMin'}).element.__vue__;
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 37})); // left
+    // expect(wrapper.vm.minValue).toBe(45);
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 39})); // right
+    // expect(wrapper.vm.minValue).toBe(50);
+  });
 
   it('should return LEFT when pushed left arrow keyboard button', ()=> {
     const event = new KeyboardEvent('keydown', {'keyCode': 37});
@@ -165,16 +199,22 @@ describe('Keyboard Test', ()=> {
 
     window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 40})); // down;
     expect(wrapper.vm.clickedHandle).toBe(wrapper.findComponent({ref: 'handleMax'}).element.__vue__);
+
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 40})); // down;
+    expect(wrapper.vm.clickedHandle).toBe(null);
   })
 
   it('should select next handle when up or back is pushed', () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 38})); // up
+    expect(wrapper.vm.clickedHandle).toBe(null);
+
     wrapper.vm.clickedHandle = wrapper.findComponent({ref: 'handleMax'}).element.__vue__;
 
     window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 38})); // up
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 37})); // up
     expect(wrapper.vm.clickedHandle).toBe(wrapper.findComponent({ref: 'handleMin'}).element.__vue__);
 
-    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8})); // back;
+    window.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 8})); // back
     expect(wrapper.vm.clickedHandle).toBe(null);
   });
-
 })

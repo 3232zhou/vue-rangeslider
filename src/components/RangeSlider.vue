@@ -33,8 +33,11 @@
 import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
-import { move, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
+import { move, moveToNextHandle, moveToPrevHandle, calculateMinHandlePosition, calculateMaxHandlePosition } from '../utils/keyBoardEventHandler';
 import { keyCodes } from '../utils/keyCodes';
+import { getMinValue, getMaxValue } from '../utils/api';
+import { onDrag, onDragEnd, whichHandleClicked, handleClicked } from '../utils/mouseEventHandler';
+import { showTooltip, hideTooltip, toggleTooltip } from '../utils/tooltipHandler';
 
 export default {
   name: 'RangeSlider',
@@ -43,7 +46,6 @@ export default {
     handle: Handle,
     range: Range,
   },
-  mixins: [],
   data() {
     return {
       barOptions: {
@@ -140,6 +142,17 @@ export default {
     move,
     moveToNextHandle,
     moveToPrevHandle,
+    getMinValue,
+    getMaxValue,
+    onDrag,
+    onDragEnd,
+    whichHandleClicked,
+    handleClicked,
+    calculateMinHandlePosition,
+    calculateMaxHandlePosition,
+    showTooltip,
+    hideTooltip,
+    toggleTooltip,
     addEventListeners() {
       document.addEventListener('mousedown', this.whichHandleClicked);
       window.addEventListener('resize', this.setInitialHandleValue);
@@ -167,36 +180,6 @@ export default {
       Object.assign(this.handleOptions, this.handle);
       Object.assign(this.tooltipOptions, this.tooltip);
       Object.assign(this.rangeOptions, this.range);
-    },
-    whichHandleClicked(e) {
-      e.preventDefault();
-      if (e.target === this.$refs.handleMin.$el) {
-        this.clickedHandle = this.$refs.handleMin;
-      } else if (e.target === this.$refs.handleMax.$el) {
-        this.clickedHandle = this.$refs.handleMax;
-      } else return;
-
-      this.handleClicked();
-    },
-    showTooltip() {
-      this.clickedHandle.handleHover();
-      this.clickedHandle.clicked = true;
-      this.clickedHandle.visibility = true;
-    },
-    hideTooltip() {
-      this.clickedHandle.clicked = false;
-      this.clickedHandle.handleLeave();
-    },
-    toggleTooltip(time) {
-      this.showTooltip();
-      setTimeout(() => this.hideTooltip(), time);
-    },
-    handleClicked() {
-      if (!this.clickedHandle) return;
-
-      this.showTooltip();
-      document.addEventListener('mousemove', this.onDrag);
-      document.addEventListener('mouseup', this.onDragEnd);
     },
     checkFlowed(type, val) {
       if (val <= 0) {
@@ -243,41 +226,9 @@ export default {
       this.maxValue = Math.round(this.maxPosition * (this.max - this.min)) + this.min;
       this.clickedHandle.$el.style.left = `${maxPercentage}%`;
     },
-    onDrag(e) {
-      e.preventDefault();
-
-      if (this.checkFlowed('mouse', e.clientX)) return;
-
-      if (this.clickedHandle === this.$refs.handleMin) {
-        this.minPosition = e.clientX / this.barWidth;
-        this.moveMinHandle();
-      }
-
-      if (this.clickedHandle === this.$refs.handleMax) {
-        this.maxPosition = e.clientX / this.barWidth;
-        this.moveMaxHandle();
-      }
-      
-      this.returnHandleValues();
-    },
     returnHandleValues() {
       this.$emit('getMinValue', this.getMinValue());
       this.$emit('getMaxValue', this.getMaxValue());
-    },
-    getMinValue() {
-      return this.minValue;
-    },
-    getMaxValue() {
-      return this.maxValue;
-    },
-    onDragEnd(e) {
-      e.preventDefault();
-
-      document.removeEventListener('mousemove', this.onDrag);
-      document.removeEventListener('mouseup', this.onDragEnd);
-
-      this.hideTooltip();
-      this.returnHandleValues();
     },
     handleKeyboardEvent(e) {
       e.preventDefault();
@@ -287,14 +238,6 @@ export default {
       if (keyCode === 'RIGHT') return this.move(keyCode);
       if (keyCode === 'ENTER' || keyCode === 'DOWN') return this.moveToNextHandle();
       if (keyCode === 'BACK' || keyCode === 'UP') return this.moveToPrevHandle();
-    },
-    calculateMinHandlePosition(direction) {
-      if(direction === 'LEFT') this.minPosition = this.minPosition - (this.gap / this.max);
-      if(direction === 'RIGHT') this.minPosition = this.minPosition + (this.gap / this.max);
-    },
-    calculateMaxHandlePosition(direction) {
-      if(direction === 'LEFT') this.maxPosition = this.maxPosition - (this.gap / this.max);
-      if(direction === 'RIGHT') this.maxPosition = this.maxPosition + (this.gap / this.max);
     },
   },
 };
