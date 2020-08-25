@@ -1,6 +1,6 @@
 # vue-rangeslider
 ![version](https://img.shields.io/npm/v/@domak/vue-rangeslider) ![build](https://travis-ci.org/forbid403/vue-rangeslider.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/forbid403/vue-rangeslider/badge.svg?branch=coveralls)](https://coveralls.io/github/forbid403/vue-rangeslider?branch=coveralls)
+[![Coverage Status](https://coveralls.io/repos/github/forbid403/vue-rangeslider/badge.svg)](https://coveralls.io/github/forbid403/vue-rangeslider)
 ![MIT](https://img.shields.io/npm/l/@domak/vue-rangeslider?color=blue) ![downloads](https://img.shields.io/npm/dt/@domak/vue-rangeslider) ![stars](https://img.shields.io/github/stars/forbid403/vue-rangeslider?color=9cf) <br>
 Your **⭐star⭐** is very helpful!!!<br>
 Slider component for Vue.js
