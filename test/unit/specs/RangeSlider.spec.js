@@ -161,7 +161,7 @@ describe('Keyboard Test', ()=> {
   let wrapper;
   beforeEach(() => wrapper = mount(RangeSlider, {
     propsData: {
-      keyboardMove: true,
+      isKeyAllowed: true,
       gap: 5
     }
   }));
