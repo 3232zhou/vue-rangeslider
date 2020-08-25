@@ -122,7 +122,7 @@ export default {
       type: Number,
       default: 70,
     },
-    keyboardMove: {
+    isKeyAllowed: {
       type: Boolean,
       default: false,
     },
@@ -156,7 +156,7 @@ export default {
     addEventListeners() {
       document.addEventListener('mousedown', this.whichHandleClicked);
       window.addEventListener('resize', this.setInitialHandleValue);
-      if(this.keyboardMove) window.addEventListener('keydown', this.handleKeyboardEvent);
+      if(this.isKeyAllowed) window.addEventListener('keydown', this.handleKeyboardEvent);
     },
     setInitialHandleValue() {
       this.barWidth = this.$refs.bar.$el.getBoundingClientRect().width;

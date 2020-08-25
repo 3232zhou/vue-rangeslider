@@ -54,7 +54,7 @@ export default {
 |defaultMin|Number|50|Default value of min handle|
 |defaultMax|Number|70|Default value of max handle|
 |gap|Number|5|How much gap when moving handle with keyboard|
-|keyboardMove|boolean|false|Move handle with keyboard [Descriptions](#keyboard-movement)|
+|isKeyAllowed|boolean|false|Move handle with keyboard [Descriptions](#keyboard-movement)|
 |bar|Object|-|[Bar Option](#bar-option)
 |handle|Object|-|[Handle Option](#handle-option)|
 |tooltip|Object|-|[Tooltip Option](#tooltip-option)|
