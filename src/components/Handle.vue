@@ -24,12 +24,6 @@ export default {
       xOffset: 0,
       initialX: 0,
       currentVal: 0,
-      defaultHandleValue: {
-
-      },
-      defaultTooltipValue: {
-
-      },
       visibility: true,
       clicked: false,
     };

@@ -33,7 +33,7 @@
 import Bar from './Bar';
 import Handle from './Handle';
 import Range from './Range';
-import { move, moveToNextHandle, moveToPrevHandle, calculateMinHandlePosition, calculateMaxHandlePosition } from '../utils/keyBoardEventHandler';
+import { move, moveToNextHandle, moveToPrevHandle } from '../utils/keyBoardEventHandler';
 import { keyCodes } from '../utils/keyCodes';
 import { getMinValue, getMaxValue } from '../utils/api';
 import { onDrag, onDragEnd, whichHandleClicked, handleClicked } from '../utils/mouseEventHandler';
@@ -148,8 +148,6 @@ export default {
     onDragEnd,
     whichHandleClicked,
     handleClicked,
-    calculateMinHandlePosition,
-    calculateMaxHandlePosition,
     showTooltip,
     hideTooltip,
     toggleTooltip,

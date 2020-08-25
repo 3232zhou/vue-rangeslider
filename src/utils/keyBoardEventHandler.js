@@ -14,13 +14,13 @@ function move(direction) {
   if (!this.clickedHandle) return;
 
   if (this.clickedHandle === this.$refs.handleMin) {
-    this.calculateMinHandlePosition(direction);
+    calculateMinHandlePosition.apply(this, [direction]);
     if (this.checkFlowed('keyboard', this.minPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMinHandle();
   }
 
   if (this.clickedHandle === this.$refs.handleMax) {
-    this.calculateMaxHandlePosition(direction);
+    calculateMaxHandlePosition.apply(this, [direction]);
     if (this.checkFlowed('keyboard', this.maxPosition)) return this.toggleTooltip(TOOLTIP_DURATION);
     this.moveMaxHandle();
   }
@@ -62,4 +62,4 @@ function moveToPrevHandle() {
   }
 }
 
-export { move, moveToNextHandle, moveToPrevHandle, calculateMinHandlePosition, calculateMaxHandlePosition };
+export { move, moveToNextHandle, moveToPrevHandle };
